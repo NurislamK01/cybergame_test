@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тақырып | АКТ Платформасы</title>
+  <meta name="description" content="4-сынып АКТ тақырыбы — теория, презентация, бейне және интерактивті тапсырмалар." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #7C3AED; --primary-dark: #5B21B6;
+      --primary-light: #EDE9FE; --secondary: #4F46E5;
+      --accent: #F59E0B; --accent-light: #FEF3C7;
+      --success: #10B981; --success-light: #D1FAE5;
+      --danger: #EF4444; --bg: #F5F3FF;
+      --card: #FFFFFF; --text: #1F2937; --muted: #6B7280;
+      --border: #E5E7EB;
+    }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* NAVBAR */
+    .navbar {
+      background: white; border-bottom: 2px solid var(--primary-light);
+      padding: 12px 24px; display: flex; align-items: center; gap: 12px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(124,58,237,0.08);
+    }
+    .back-btn {
+      display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+      background: var(--primary-light); border: none; border-radius: 12px;
+      color: var(--primary); font-family: 'Nunito',sans-serif;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: background 0.2s; text-decoration: none;
+    }
+    .back-btn:hover { background: #DDD6FE; }
+    .nav-topic-title {
+      font-size: 16px; font-weight: 800; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .nav-spacer { flex: 1; }
+    .nav-coins {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--accent-light); padding: 8px 14px;
+      border-radius: 20px; border: 2px solid #FDE68A;
+    }
+    .nav-coins span { font-size: 18px; }
+    .nav-coins strong { font-size: 16px; font-weight: 900; color: #92400E; }
+
+    /* HERO тақырып баннері */
+    .topic-hero {
+      padding: 48px 24px 64px;
+      position: relative; overflow: hidden;
+    }
+    .topic-hero-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; gap: 32px;
+    }
+    .topic-hero-icon { font-size: 88px; flex-shrink: 0; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    .topic-hero-text h1 {
+      font-size: clamp(24px,4vw,40px); font-weight: 900; color: white; margin-bottom: 8px;
+    }
+    .topic-hero-text p { font-size: 16px; color: rgba(255,255,255,0.85); font-weight: 600; }
+    .topic-section-tag {
+      display: inline-block; background: rgba(255,255,255,0.2);
+      padding: 4px 14px; border-radius: 20px; font-size: 13px;
+      font-weight: 700; color: white; margin-bottom: 12px;
+    }
+    .topic-hero-deco {
+      position: absolute; right: -20px; bottom: -20px;
+      font-size: 120px; opacity: 0.1; pointer-events: none;
+    }
+
+    /* 4 БЛОК NAV TABS */
+    .blocks-nav {
+      max-width: 960px; margin: -28px auto 0;
+      padding: 0 20px; display: flex; gap: 8px;
+      position: relative; z-index: 10;
+    }
+    .block-tab {
+      flex: 1; padding: 12px 8px; background: white;
+      border: 2px solid transparent; border-radius: 16px;
+      font-family: 'Nunito',sans-serif; font-size: 13px; font-weight: 800;
+      cursor: pointer; transition: all 0.3s; text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      color: var(--muted); display: flex; flex-direction: column;
+      align-items: center; gap: 4px;
+    }
+    .block-tab .tab-icon { font-size: 22px; }
+    .block-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .block-tab.active {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; box-shadow: 0 8px 24px rgba(124,58,237,0.35);
+    }
+
+    /* НЕГІЗГІ КОНТЕНТ */
+    .page-content { max-width: 960px; margin: 24px auto 40px; padding: 0 20px; }
+    .block-panel { display: none; }
+    .block-panel.active { display: block; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =====================
+       БЛОК 1: ТЕОРИЯ
+    ===================== */
+    .theory-card {
+      background: white; border-radius: 24px; padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+    .block-title {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .block-title-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+    }
+    .block-title h2 { font-size: 22px; font-weight: 900; color: var(--text); }
+
+    /* Теория мәтіні */
+    .theory-content p {
+      font-size: 15px; line-height: 1.8; color: #374151; margin-bottom: 16px; font-weight: 600;
+    }
+    .theory-content h3 {
+      font-size: 17px; font-weight: 900; color: var(--primary); margin: 20px 0 8px;
+    }
+
+    /* Инфографика карточкалары */
+    .info-cards {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+      gap: 16px; margin: 20px 0;
+    }
+    .info-card {
+      background: linear-gradient(135deg, var(--primary-light), #DDD6FE);
+      border-radius: 18px; padding: 20px; text-align: center;
+      border: 2px solid #DDD6FE;
+    }
+    .info-card .ic-icon { font-size: 36px; margin-bottom: 8px; }
+    .info-card .ic-title { font-size: 14px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+    .info-card .ic-text { font-size: 12px; color: var(--muted); font-weight: 600; line-height: 1.4; }
+
+    /* Маңызды ескерту блогы */
+    .theory-note {
+      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+      border-left: 4px solid var(--accent); border-radius: 0 16px 16px 0;
+      padding: 16px 20px; margin: 16px 0; display: flex; gap: 12px;
+    }
+    .theory-note-icon { font-size: 24px; }
+    .theory-note-text { font-size: 14px; color: #78350F; font-weight: 700; line-height: 1.5; }
+
+    /* Қадамдар тізімі */
+    .steps-list { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+    .step-item {
+      display: flex; gap: 16px; align-items: start;
+      background: #F9FAFB; border-radius: 16px; padding: 16px;
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; font-weight: 900; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-content h4 { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .step-content p { font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.5; }
+
+    /* =====================
+       БЛОК 2: ПРЕЗЕНТАЦИЯ
+    ===================== */
+    .presentation-card {
+      background: white; border-radius: 24px; padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+
+    /* Слайд вьюер */
+    .slide-viewer {
+      background: #1E1B4B; border-radius: 20px; overflow: hidden;
+      margin-bottom: 20px; position: relative;
+    }
+    .slide-display {
+      position: relative; padding-bottom: 56.25%; /* 16:9 */
+      min-height: 300px;
+    }
+    .slide-inner {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px;
+    }
+    .slide-content {
+      text-align: center; color: white; width: 100%;
+      animation: slideIn 0.4s ease;
+    }
+    @keyframes slideIn { from{ opacity:0; transform:translateX(30px); } to{ opacity:1; transform:translateX(0); } }
+    .slide-emoji { font-size: 64px; margin-bottom: 16px; }
+    .slide-title { font-size: clamp(18px,3vw,28px); font-weight: 900; margin-bottom: 12px; }
+    .slide-body { font-size: clamp(13px,2vw,16px); opacity: 0.85; line-height: 1.6; max-width: 600px; margin: 0 auto; }
+    .slide-number {
+      position: absolute; top: 12px; right: 16px;
+      background: rgba(255,255,255,0.15); padding: 4px 12px;
+      border-radius: 20px; font-size: 13px; font-weight: 700; color: white;
+    }
+
+    /* Слайд навигация */
+    .slide-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; background: rgba(255,255,255,0.05);
+    }
+    .slide-nav-btn {
+      background: rgba(255,255,255,0.15); border: none; color: white;
+      width: 40px; height: 40px; border-radius: 12px; font-size: 18px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .slide-nav-btn:hover { background: rgba(255,255,255,0.3); }
+    .slide-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .slide-dots { display: flex; gap: 8px; }
+    .slide-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.2s;
+    }
+    .slide-dot.active { background: white; transform: scale(1.3); }
+
+    /* =====================
+       БЛОК 3: БЕЙНЕМАТЕРИАЛ
+    ===================== */
+    .video-card {
+      background: white; border-radius: 24px; padding: 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+    .video-player-wrap {
+      background: #000; border-radius: 20px; overflow: hidden;
+      position: relative; padding-bottom: 56.25%; margin-bottom: 20px;
+    }
+    .video-player-wrap iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+    }
+    .video-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1E1B4B, #312E81);
+      cursor: pointer;
+    }
+    .video-play-btn {
+      width: 80px; height: 80px; background: rgba(255,255,255,0.2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 36px; transition: all 0.3s; margin-bottom: 16px;
+      backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.3);
+    }
+    .video-placeholder:hover .video-play-btn {
+      background: rgba(124,58,237,0.5); transform: scale(1.1);
+    }
+    .video-placeholder-text { color: white; font-size: 16px; font-weight: 700; opacity: 0.9; }
+    .video-placeholder-subtext { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 6px; }
+    .video-list { display: flex; flex-direction: column; gap: 12px; }
+    .video-item {
+      display: flex; gap: 16px; padding: 14px 16px;
+      background: var(--bg); border-radius: 16px; cursor: pointer;
+      border: 2px solid transparent; transition: all 0.2s;
+    }
+    .video-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .video-item.active { border-color: var(--primary); background: var(--primary-light); }
+    .video-thumb { font-size: 32px; flex-shrink: 0; }
+    .video-info h4 { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+    .video-info span { font-size: 12px; color: var(--muted); font-weight: 600; }
+
+    /* =====================
+       БЛОК 4: ГЕЙМИФИКАЦИЯ
+    ===================== */
+    .game-card {
+      background: white; border-radius: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); overflow: hidden;
+    }
+    .game-selector {
+      display: flex; border-bottom: 2px solid var(--border);
+    }
+    .game-selector-btn {
+      flex: 1; padding: 16px; border: none; background: transparent;
+      font-family: 'Nunito',sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; color: var(--muted);
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      border-bottom: 3px solid transparent;
+    }
+    .game-selector-btn .gs-icon { font-size: 24px; }
+    .game-selector-btn.active {
+      color: var(--primary); border-bottom-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .game-area { padding: 28px; }
+
+    /* Ойын нәтижесі жолағы */
+    .game-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .game-score-display {
+      display: flex; gap: 16px;
+    }
+    .score-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg); padding: 8px 14px; border-radius: 12px;
+      font-size: 15px; font-weight: 700;
+    }
+
+    /* QUIZ ОЙЫНЫ */
+    .quiz-question {
+      background: linear-gradient(135deg, var(--primary-light), #DDD6FE);
+      border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center;
+    }
+    .quiz-q-icon { font-size: 40px; margin-bottom: 8px; }
+    .quiz-q-num { font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+    .quiz-q-text { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.4; }
+
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .quiz-option {
+      padding: 14px 20px; border: 2px solid var(--border); border-radius: 14px;
+      background: white; font-family: 'Nunito',sans-serif; font-size: 15px;
+      font-weight: 700; cursor: pointer; text-align: left;
+      transition: all 0.25s; display: flex; align-items: center; gap: 12px;
+    }
+    .quiz-option:hover { border-color: var(--primary); background: var(--primary-light); }
+    .quiz-option.correct { border-color: var(--success); background: var(--success-light); color: var(--success); }
+    .quiz-option.wrong { border-color: var(--danger); background: #FEF2F2; color: var(--danger); }
+    .quiz-option.disabled { pointer-events: none; }
+    .opt-letter {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      background: var(--primary-light); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 900;
+    }
+    .quiz-option.correct .opt-letter { background: var(--success); color: white; }
+    .quiz-option.wrong .opt-letter { background: var(--danger); color: white; }
+
+    .quiz-feedback {
+      padding: 16px 20px; border-radius: 16px; margin-bottom: 16px;
+      font-size: 15px; font-weight: 700; display: none; align-items: center; gap: 10px;
+    }
+    .quiz-feedback.correct { background: var(--success-light); color: #065F46; }
+    .quiz-feedback.wrong { background: #FEF2F2; color: #991B1B; }
+    .quiz-feedback.show { display: flex; animation: fadeUp 0.3s ease; }
+
+    .quiz-btn {
+      width: 100%; padding: 14px; border: none; border-radius: 16px;
+      font-family: 'Nunito',sans-serif; font-size: 16px; font-weight: 800;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .quiz-btn-next {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+    }
+    .quiz-btn-next:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(124,58,237,0.4); }
+    .quiz-btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* СӘЙКЕСТЕНДІРУ (Match) ойыны */
+    .match-game { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .match-column { display: flex; flex-direction: column; gap: 10px; }
+    .match-col-title { font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
+    .match-item {
+      padding: 12px 16px; border-radius: 14px; border: 2px solid var(--border);
+      background: white; font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; text-align: center;
+    }
+    .match-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .match-item.selected { border-color: var(--accent); background: var(--accent-light); transform: scale(1.03); }
+    .match-item.matched { border-color: var(--success); background: var(--success-light); color: var(--success); cursor: default; }
+    .match-item.wrong-flash { border-color: var(--danger); background: #FEF2F2; animation: shake 0.4s ease; }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)}
+    }
+
+    /* DRAG & DROP ойыны */
+    .dragdrop-area { padding: 0; }
+    .drag-instructions {
+      text-align: center; padding: 16px; font-size: 15px; font-weight: 700;
+      color: var(--muted); margin-bottom: 16px;
+      border: 2px dashed var(--border); border-radius: 16px;
+    }
+    .drag-items-pool {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-bottom: 20px; min-height: 60px;
+      padding: 12px; background: var(--bg); border-radius: 16px;
+    }
+    .drag-item {
+      padding: 10px 18px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; font-size: 14px; font-weight: 700; cursor: grab;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(124,58,237,0.3);
+      user-select: none;
+    }
+    .drag-item:active { cursor: grabbing; transform: scale(1.05); }
+    .drag-item.dragging { opacity: 0.5; }
+    .drop-zones { display: flex; flex-direction: column; gap: 12px; }
+    .drop-zone {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px; background: white; border-radius: 16px;
+      border: 2px dashed var(--border); transition: all 0.2s;
+      min-height: 54px;
+    }
+    .drop-zone.drag-over { border-color: var(--primary); background: var(--primary-light); }
+    .drop-zone.correct-drop { border-color: var(--success); background: var(--success-light); border-style: solid; }
+    .drop-zone.wrong-drop { border-color: var(--danger); background: #FEF2F2; border-style: solid; }
+    .drop-zone-label { font-size: 14px; font-weight: 700; color: var(--text); min-width: 140px; }
+    .drop-zone-slot {
+      flex: 1; min-height: 36px; border-radius: 10px;
+      display: flex; align-items: center; padding: 4px;
+    }
+    .dropped-item {
+      padding: 8px 16px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .drop-zone.correct-drop .dropped-item { background: linear-gradient(135deg, var(--success), #059669); }
+
+    /* Ойын аяқталуы */
+    .game-result {
+      text-align: center; padding: 32px; display: none;
+    }
+    .game-result.show { display: block; animation: fadeUp 0.4s ease; }
+    .result-emoji { font-size: 72px; margin-bottom: 16px; }
+    .result-title { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
+    .result-score { font-size: 18px; color: var(--muted); font-weight: 700; margin-bottom: 24px; }
+    .result-coins {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-light); padding: 12px 24px;
+      border-radius: 20px; font-size: 20px; font-weight: 900;
+      color: #92400E; margin-bottom: 24px; border: 2px solid #FDE68A;
+    }
+    .result-btn {
+      padding: 14px 32px; border: none; border-radius: 16px;
+      font-family: 'Nunito',sans-serif; font-size: 16px; font-weight: 800;
+      cursor: pointer; transition: all 0.3s; margin: 6px;
+    }
+    .result-retry {
+      background: var(--primary-light); color: var(--primary);
+    }
+    .result-next {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+    }
+
+    /* Монета анимация */
+    .floating-coin {
+      position: fixed; font-size: 24px; font-weight: 900;
+      color: #F59E0B; pointer-events: none; z-index: 9998;
+      animation: floatUp 1.5s ease forwards;
+    }
+    @keyframes floatUp {
+      0% { opacity:1; transform: translateY(0) scale(1); }
+      100% { opacity:0; transform: translateY(-120px) scale(1.5); }
+    }
+
+    /* Прогресс баннері */
+    .progress-banner {
+      background: white; border-radius: 20px; padding: 20px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .pb-icon { font-size: 36px; }
+    .pb-info { flex: 1; }
+    .pb-label { font-size: 13px; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+    .pb-bar-wrap { height: 10px; background: var(--border); border-radius: 10px; }
+    .pb-fill {
+      height: 100%; border-radius: 10px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: width 0.6s ease;
+    }
+    .pb-coins { font-size: 20px; font-weight: 900; color: #92400E; white-space: nowrap; }
+
+    /* Loading */
+    .loading-overlay {
+      position: fixed; inset: 0; background: rgba(245,243,255,0.95);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 16px;
+    }
+    .loading-spinner {
+      width: 52px; height: 52px; border: 4px solid var(--primary-light);
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-overlay.hidden { display: none; }
+
+    @media(max-width:640px){
+      .topic-hero-inner{flex-direction:column;text-align:center}
+      .blocks-nav{overflow-x:auto;padding-bottom:4px}
+      .block-tab{min-width:80px}
+      .match-game{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <p style="font-size:16px;font-weight:700;color:var(--primary)">Жүктелуде... ⏳</p>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="back-btn">← Артқа</a>
+  <span class="nav-topic-title" id="nav-title">Тақырып</span>
+  <div class="nav-spacer"></div>
+  <div class="nav-coins">
+    <span>🪙</span>
+    <strong id="nav-coins-val">0</strong>
+    <span style="font-size:12px;color:#A16207;font-weight:700">монета</span>
+  </div>
+</nav>
+
+<!-- ТАҚЫРЫП HERO -->
+<section class="topic-hero" id="topic-hero">
+  <div class="topic-hero-inner">
+    <div class="topic-hero-icon" id="hero-icon">🎬</div>
+    <div class="topic-hero-text">
+      <div class="topic-section-tag" id="hero-tag">3-бөлім</div>
+      <h1 id="hero-title">Тақырып тақырыбы</h1>
+      <p id="hero-desc">Тақырып сипаттамасы</p>
+    </div>
+  </div>
+  <div class="topic-hero-deco" id="hero-deco">🎬</div>
+</section>
+
+<!-- 4 БЛОК навигациясы -->
+<div class="blocks-nav">
+  <button class="block-tab active" onclick="switchBlock('theory', this)" id="tab-theory">
+    <span class="tab-icon">📖</span>Теория
+  </button>
+  <button class="block-tab" onclick="switchBlock('slides', this)" id="tab-slides">
+    <span class="tab-icon">📊</span>Презентация
+  </button>
+  <button class="block-tab" onclick="switchBlock('video', this)" id="tab-video">
+    <span class="tab-icon">🎬</span>Бейне
+  </button>
+  <button class="block-tab" onclick="switchBlock('game', this)" id="tab-game">
+    <span class="tab-icon">🎮</span>Ойын
+  </button>
+</div>
+
+<!-- НЕГІЗГІ КОНТЕНТ -->
+<div class="page-content">
+
+  <!-- Прогресс баннері -->
+  <div class="progress-banner">
+    <div class="pb-icon" id="pb-icon">🎯</div>
+    <div class="pb-info">
+      <div class="pb-label">Тақырып бойынша прогресс</div>
+      <div class="pb-bar-wrap"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
+    </div>
+    <div class="pb-coins">🪙 <span id="pb-coins">0</span>/50</div>
+  </div>
+
+  <!-- =============================
+       БЛОК 1: ТЕОРИЯ
+  ============================= -->
+  <div class="block-panel active" id="panel-theory">
+    <div class="theory-card">
+      <div class="block-title">
+        <div class="block-title-icon" style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE)">📖</div>
+        <h2 id="theory-main-title">Теориялық блок</h2>
+      </div>
+      <div class="theory-content" id="theory-content">
+        <!-- JS арқылы толтырылады -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================
+       БЛОК 2: ПРЕЗЕНТАЦИЯ
+  ============================= -->
+  <div class="block-panel" id="panel-slides">
+    <div class="presentation-card">
+      <div class="block-title">
+        <div class="block-title-icon" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE)">📊</div>
+        <h2>Презентация блогы</h2>
+      </div>
+      <div class="slide-viewer">
+        <div class="slide-display">
+          <div class="slide-inner">
+            <div class="slide-content" id="slide-content"></div>
+          </div>
+          <div class="slide-number" id="slide-number">1/5</div>
+        </div>
+        <div class="slide-nav">
+          <button class="slide-nav-btn" id="slide-prev" onclick="prevSlide()">◀</button>
+          <div class="slide-dots" id="slide-dots"></div>
+          <button class="slide-nav-btn" id="slide-next" onclick="nextSlide()">▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================
+       БЛОК 3: БЕЙНЕ
+  ============================= -->
+  <div class="block-panel" id="panel-video">
+    <div class="video-card">
+      <div class="block-title">
+        <div class="block-title-icon" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0)">🎬</div>
+        <h2>Бейнематериал блогы</h2>
+      </div>
+      <div class="video-player-wrap" id="video-player">
+        <div class="video-placeholder" id="video-placeholder" onclick="playVideo()">
+          <div class="video-play-btn">▶</div>
+          <div class="video-placeholder-text" id="vid-title">Бейнені жүктеу</div>
+          <div class="video-placeholder-subtext">Басу арқылы бейнені қосыңыз</div>
+        </div>
+      </div>
+      <div class="video-list" id="video-list"></div>
+    </div>
+  </div>
+
+  <!-- =============================
+       БЛОК 4: ГЕЙМИФИКАЦИЯ
+  ============================= -->
+  <div class="block-panel" id="panel-game">
+    <div class="game-card">
+      <div class="game-selector">
+        <button class="game-selector-btn active" onclick="switchGame('quiz', this)">
+          <span class="gs-icon">❓</span>Викторина
+        </button>
+        <button class="game-selector-btn" onclick="switchGame('match', this)">
+          <span class="gs-icon">🔗</span>Сәйкестендір
+        </button>
+        <button class="game-selector-btn" onclick="switchGame('dragdrop', this)">
+          <span class="gs-icon">✋</span>Орналаcтыр
+        </button>
+      </div>
+      <div class="game-area">
+        <!-- QUIZ -->
+        <div id="game-quiz" class="game-panel">
+          <div class="game-header">
+            <span style="font-size:18px;font-weight:800">❓ Викторина</span>
+            <div class="game-score-display">
+              <div class="score-chip">✅ <span id="quiz-correct">0</span></div>
+              <div class="score-chip">❌ <span id="quiz-wrong">0</span></div>
+            </div>
+          </div>
+          <div id="quiz-area"><!-- JS толтырады --></div>
+          <div class="game-result" id="quiz-result">
+            <div class="result-emoji" id="quiz-res-emoji">🎉</div>
+            <div class="result-title" id="quiz-res-title">Браво!</div>
+            <div class="result-score" id="quiz-res-score">5/5 дұрыс жауап</div>
+            <div class="result-coins" id="quiz-res-coins">🪙 +0 монета!</div>
+            <div>
+              <button class="result-btn result-retry" onclick="initQuizGame()">🔄 Қайталау</button>
+              <button class="result-btn result-next" onclick="switchBlock('slides', document.getElementById('tab-slides'))">📊 Слайдтарға →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MATCH -->
+        <div id="game-match" class="game-panel" style="display:none">
+          <div class="game-header">
+            <span style="font-size:18px;font-weight:800">🔗 Сәйкестендіру</span>
+            <div class="score-chip">🏆 <span id="match-score">0</span></div>
+          </div>
+          <div id="match-area"></div>
+          <div class="game-result" id="match-result">
+            <div class="result-emoji">🏆</div>
+            <div class="result-title">Тамаша!</div>
+            <div class="result-score">Барлық жұптарды таптың!</div>
+            <div class="result-coins" id="match-res-coins">🪙 +0 монета!</div>
+            <button class="result-btn result-retry" onclick="initMatchGame()">🔄 Қайтадан</button>
+          </div>
+        </div>
+
+        <!-- DRAG DROP -->
+        <div id="game-dragdrop" class="game-panel" style="display:none">
+          <div class="game-header">
+            <span style="font-size:18px;font-weight:800">✋ Орналастыру</span>
+            <div class="score-chip">⭐ <span id="dd-score">0</span>/<span id="dd-total">0</span></div>
+          </div>
+          <div id="dd-area"></div>
+          <div class="game-result" id="dd-result">
+            <div class="result-emoji">⭐</div>
+            <div class="result-title">Дұрыс орналастырдың!</div>
+            <div class="result-score" id="dd-res-score">Барлығы дұрыс!</div>
+            <div class="result-coins" id="dd-res-coins">🪙 +0 монета!</div>
+            <button class="result-btn result-retry" onclick="initDragDropGame()">🔄 Қайтадан</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- / page-content -->
+
+<!-- CHATBOT -->
+<div id="chatbot-mount"></div>
+
+<script type="module">
+// =============================================
+// ТАҚЫРЫПТАР ДЕРЕКТЕР БАЗАСЫ
+// =============================================
+const TOPICS_DATA = {
+  'video-creation': {
+    title: 'Бейне жазба жасау',
+    icon: '🎥',
+    tag: '3-бөлім • 4.2.4.1',
+    desc: 'Табиғи құбылыстарды бейнеге түсіруді үйрен',
+    color: 'linear-gradient(135deg,#4F46E5,#7C3AED)',
+    theory: {
+      title: 'Бейне жазба жасау негіздері',
+      content: `
+        <p>Бейне жазба — бұл қозғалмалы суреттер мен дыбыстардың тізбегі. 
+        Табиғи құбылыстарды (жаңбыр, күн батысы, өсімдіктер) бейнеге түсіру — 
+        АКТ пәнінің маңызды тапсырмасы! 🌿</p>
+        <h3>📹 Бейне жазуға не керек?</h3>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">📱</div>
+            <div class="ic-title">Камера</div>
+            <div class="ic-text">Смартфон немесе камера арқылы жазуға болады</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">☀️</div>
+            <div class="ic-title">Жарық</div>
+            <div class="ic-text">Жақсы жарықты жер таңда, терезе жанына шық</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🤫</div>
+            <div class="ic-title">Дыбыс</div>
+            <div class="ic-text">Тыныш жерде жаз, желдеткіштен аулақ бол</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">📐</div>
+            <div class="ic-title">Бұрыш</div>
+            <div class="ic-text">Горизонталь (ендік) бағытта жаз</div>
+          </div>
+        </div>
+        <h3>🎬 Бейне жазу қадамдары</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Тақырыпты таңда</h4>
+              <p>Не туралы жазатыныңды шеш: жаңбыр, гүл өсуі, бұлттар, суайрық...</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Жоспар жаса (сценарий)</h4>
+              <p>Бейне неден басталады, ортасы не болады, қалай аяқталады? Жазып ал.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Жазу орнын таңда</h4>
+              <p>Жарықты, дыбысы жақсы, фоны қызықты орын таңда.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Жазу</h4>
+              <p>Камераны тұрақты ұста, дірілдемесін. Бірнеше рет жаз — ең жақсысын таңда!</p>
+            </div>
+          </div>
+        </div>
+        <div class="theory-note">
+          <div class="theory-note-icon">💡</div>
+          <div class="theory-note-text">
+            Маңызды кеңес: Бейне жазу кезінде камераны горизонтальды (ені бойынша) 
+            ұстаңыз! Тік бейне компьютер экранында жақсы көрінбейді.
+          </div>
+        </div>
+        <h3>📊 Бейне форматтары</h3>
+        <p>Ең жиі қолданылатын бейне форматтары: <strong>MP4, AVI, MOV</strong>. 
+        MP4 — ең ыңғайлы формат, барлық қондырғыларда ашылады.</p>
+      `
+    },
+    slides: [
+      { emoji:'🎥', title:'Бейне жазба дегеніміз не?', body:'Бейне — қозғалыстағы суреттердің тізбегі. Секундына 24-30 кадр! 🎞️' },
+      { emoji:'📱', title:'Жазу құралдары', body:'Смартфон, планшет, цифрлық камера немесе веб-камерамен жазуға болады.' },
+      { emoji:'☀️', title:'Жарық маңызды!', body:'Жақсы жарық — сапалы бейненің кілті. Терезеге қараған жерден жаз.' },
+      { emoji:'🎯', title:'Бейне жазу ережелері', body:'1. Горизонтальды ұста\n2. Тұрақты ұста\n3. Тыныш ортада жаз\n4. Бірнеше рет жаз' },
+      { emoji:'🌿', title:'«Табиғи құбылыстар» тақырыбы', body:'Жаңбыр, күн шығуы, жел, өсімдіктер, жануарлар — бәрін видеоға түсіруге болады!' },
+    ],
+    videos: [
+      { title:'Бейне жазба негіздері', desc:'7 мин • Камера ұстау, жарық, дыбыс кеңестері', youtubeId:'dQw4w9WgXcQ' },
+      { title:'Смартфонмен бейне жазу', desc:'5 мин • Смартфон арқылы сапалы видео', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'Бейне жазу кезінде камераны қалай ұстау керек?', opts:['Тік (вертикаль)','Горизонталь (ендік)','Бұрыш бойынша','Маңызды емес'], correct:1, exp:'Горизонтальды ұстасаңыз, бейне компьютер мен теледидарда жақсы көрінеді!' },
+      { q:'Қандай бейне форматы ең ыңғайлы?', opts:['PNG','MP3','MP4','PDF'], correct:2, exp:'MP4 форматы ең кең тараған бейне форматы, барлық қондырғыларда жұмыс жасайды.' },
+      { q:'Жақсы бейне үшін не маңызды?', opts:['Тек жылдамдық','Жарық, дыбыс және тұрақтылық','Тек камера бағасы','Бейне ұзындығы'], correct:1, exp:'Жақсы жарық, таза дыбыс және тұрақты ұстаған камера — сапалы бейненің негізі!' },
+      { q:'«Сценарий» дегеніміз не?', opts:['Бейне редактор','Камера моделі','Бейненің жоспары','Дыбыс деңгейі'], correct:2, exp:'Сценарий — бейне мазмұнының алдын ала жасалған жоспары.' },
+      { q:'Секундына қанша кадр болса бейне тегіс болады?', opts:['5-10','15-20','24-30','100+'], correct:2, exp:'Секундына 24-30 кадр (fps) бейнені тегіс және табиғи көрсетеді.' },
+    ],
+    match: {
+      lefts:  ['MP4 форматы','Горизонталь','Сценарий','Кадр'],
+      rights: ['Бейне жоспары','Бейне файл түрі','Жалғыз сурет','Ендік бағыт'],
+      pairs: [1, 3, 0, 2]
+    },
+    dragdrop: {
+      items: ['Камераны дайында','Сценарий жаз','Орын таңда','Жаз','Редакцияла'],
+      zones: ['1-қадам','2-қадам','3-қадам','4-қадам','5-қадам'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'video-editing': {
+    title: 'Бейнені өңдеу',
+    icon: '✂️',
+    tag: '3-бөлім • 4.2.4.2',
+    desc: 'Бейне редакторда кескіндеу, өтулер, музыка қосу',
+    color: 'linear-gradient(135deg,#5B21B6,#7C3AED)',
+    theory: {
+      title: 'Бейне өңдеу негіздері',
+      content: `
+        <p>Бейнені өңдеу (редактирование) — жазып алған бейнені компьютерде 
+        <strong>кескіндеу, қосу, реттеу</strong> процесі. Мұны бейне редактор 
+        бағдарламалары арқылы жасаймыз! ✂️</p>
+        <h3>💻 Бейне редактор бағдарламалары</h3>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">🎬</div>
+            <div class="ic-title">Windows Movie Maker</div>
+            <div class="ic-text">Windows-та тегін, оңай қолдануға арналған</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">✂️</div>
+            <div class="ic-title">CapCut</div>
+            <div class="ic-text">Тегін, смартфон мен компьютерда жұмыс жасайды</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🍎</div>
+            <div class="ic-title">iMovie</div>
+            <div class="ic-text">Apple қондырғыларында тегін, жылдам</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🎞️</div>
+            <div class="ic-title">Clipchamp</div>
+            <div class="ic-text">Windows 11-де кірістірілген бейне редактор</div>
+          </div>
+        </div>
+        <h3>🛠️ Өңдеудің негізгі операциялары</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Кескіндеу (Trim/Cut)</h4><p>Артық бөліктерді қиып тастау. Тек керек бөліктерді қалдыру.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Өту эффектілері (Transitions)</h4><p>Бөліктер арасына тегіс өту эффектілері қосу: fade, slide, zoom...</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Музыка қосу</h4><p>Фондық музыка немесе дыбыс эффектілерін қосу.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content"><h4>Мәтін & Субтитрлер</h4><p>Бейнеге мәтін, атаулар, субтитрлер қосу.</p></div>
+          </div>
+        </div>
+        <div class="theory-note">
+          <div class="theory-note-icon">⚠️</div>
+          <div class="theory-note-text">Ескерту: Музыка қосқанда авторлық құқыққа назар аудар! 
+          YouTube Audio Library немесе Pixabay Music-те тегін музыка бар.</div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'✂️', title:'Бейне өңдеу дегеніміз не?', body:'Жазып алған бейнені кескіндеу, реттеу, безендіру процесі — бейне редактирование!' },
+      { emoji:'💻', title:'Бейне редакторлар', body:'CapCut, Movie Maker, iMovie, Clipchamp — бәрі де тамаша редакторлар!' },
+      { emoji:'✂️', title:'Кескіндеу (Trim)', body:'Артық бөліктерді алып тастау. Тек ең жақсы сәттерді қалдыр!' },
+      { emoji:'🎵', title:'Дыбыс қосу', body:'Фондық музыка бейненің атмосферасын жасайды. Авторлық музыка қолдан!' },
+      { emoji:'💬', title:'Мәтін қосу', body:'Бейнеге атаулар, субтитрлер немесе шақыру мәтіндерін қосуға болады.' },
+    ],
+    videos: [
+      { title:'CapCut-та бейне өңдеу', desc:'8 мин • CapCut-тың негізгі түймелері', youtubeId:'dQw4w9WgXcQ' },
+      { title:'Өту эффектілері', desc:'4 мин • Transition қосу жолдары', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'«Trim» (кескіндеу) не үшін қолданылады?', opts:['Дыбыс қосу үшін','Артық бөліктерді алып тастау үшін','Түс өзгерту үшін','Жылдамдату үшін'], correct:1, exp:'Trim арқылы бейненің ерте немесе кеш бөліктерін кесіп тастайсың!' },
+      { q:'Бейнеге музыка қосқанда нені ескеру керек?', opts:['Ештеңені','Авторлық құқықты','Файл көлемін','Бейне ұзындығын'], correct:1, exp:'Басқалардың музыкасын рұқсатсыз пайдалану заңсыз. Тегін музыка сайттарын пайдалан!' },
+      { q:'«Transition» (өту) дегеніміз не?', opts:['Бейне жылдамдығы','Бөліктер арасындағы тегіс өту эффекті','Музыка деңгейі','Видео форматы'], correct:1, exp:'Transition — екі сцена арасындағы тегіс ауысу эффектісі. Fade, Slide, Zoom т.б.' },
+      { q:'Қай бағдарлама Windows-та кірістірілген?', opts:['Adobe Premiere','CapCut','Clipchamp','Final Cut Pro'], correct:2, exp:'Clipchamp — Windows 11-де кірістірілген тегін бейне редактор.' },
+      { q:'Субтитрлер не үшін қолданылады?', opts:['Бейнені үлкейту','Бейне мазмұнын мәтін арқылы көрсету','Музыка қосу','Анимация жасау'], correct:1, exp:'Субтитрлер — бейне сөздерінің мәтіндік нұсқасы. Есту проблемасы барлар үшін өте маңызды!' },
+    ],
+    match: {
+      lefts:  ['Trim','Transition','Субтитр','Fade'],
+      rights: ['Бірте-бірте жоғалу','Мәтін жолақтары','Сцена арасы өту','Кескіндеу'],
+      pairs: [3, 2, 1, 0]
+    },
+    dragdrop: {
+      items: ['Trim','Transition','Музыка','Мәтін','Export'],
+      zones: ['Кескіндеу','Өту эффекті','Дыбыс','Субтитр','Сақтау'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'slide-layout': {
+    title: 'Слайд макеті & Ақпарат іздеу',
+    icon: '🖼️',
+    tag: '4-бөлім • 4.3.1.1',
+    desc: 'Слайдқа макет таңдау, интернеттен ақпарат іздеу',
+    color: 'linear-gradient(135deg,#1D4ED8,#3B82F6)',
+    theory: {
+      title: 'Слайд макеті және ақпарат іздеу',
+      content: `
+        <p>Презентация — идея мен ақпаратты слайдтар арқылы визуалды жеткізу. 
+        Жақсы презентация <strong>тазалық, реттілік және дизайн</strong> негізінде жасалады! 📊</p>
+        <h3>🖼️ Слайд макеттері (Layout)</h3>
+        <p>Макет — слайд ішіндегі элементтердің орналасу үлгісі. PowerPoint пен Google Slides-та 
+        көптеген дайын макеттер бар!</p>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">📝</div>
+            <div class="ic-title">Тақырып слайды</div>
+            <div class="ic-text">Бірінші слайд үшін. Ірі тақырып мәтіні</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">📄</div>
+            <div class="ic-title">Мазмұн слайды</div>
+            <div class="ic-text">Мәтін + сурет комбинациясы</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🖼️</div>
+            <div class="ic-title">Сурет слайды</div>
+            <div class="ic-text">Толық сурет фоны бар слайд</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">📊</div>
+            <div class="ic-title">Диаграмма слайды</div>
+            <div class="ic-text">Сандық деректер мен кесте</div>
+          </div>
+        </div>
+        <h3>🔍 Ақпарат іздеу ережелері</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Сенімді сайттарды пайдалан</h4><p>Wikipedia, ресми ғылыми сайттар, мектептің кітапханасы.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Нақты сөздермен ізде</h4><p>Іздеу жолағына нақты сұрақ жаз: «Аю туралы фактілер» ≠ «аю»</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Дереккөзді көрсет</h4><p>Ақпарат алған жерді слайдтың астына жаз.</p></div>
+          </div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'📊', title:'Презентация дегеніміз не?', body:'Идеяңды слайдтар арқылы визуалды жеткізу тәсілі. PowerPoint, Google Slides, Canva!' },
+      { emoji:'🖼️', title:'Макет дегеніміз не?', body:'Слайдтағы элементтердің (мәтін, сурет) орналасу үлгісі – макет деп аталады.' },
+      { emoji:'🎨', title:'Жақсы макет таңдау', body:'1. Мазмұнға сай таңда\n2. Оқуға ыңғайлы болсын\n3. Тым тығын болмасын' },
+      { emoji:'🔍', title:'Ақпарат іздеу', body:'Google-да нақты сөздермен ізде. Wikipedia — жақсы бастапқы нүкте!' },
+      { emoji:'✅', title:'Деректерді тексер!', body:'Бір ғана сайтқа сенбе. Кем дегенде 2-3 сайтты салыстыр.' },
+    ],
+    videos: [
+      { title:'PowerPoint-та макет таңдау', desc:'6 мин • Макет, тақырып, фон', youtubeId:'dQw4w9WgXcQ' },
+      { title:'Интернеттен ақпарат іздеу', desc:'5 мин • Google іздеу кеңестері', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'«Макет» (Layout) дегеніміз не?', opts:['Слайд саны','Элементтердің орналасу үлгісі','Презентация тақырыбы','Фон түсі'], correct:1, exp:'Макет — слайдтағы мәтін, сурет, тақырып элементтерінің дайын орналасу үлгісі.' },
+      { q:'Ақпарат іздегенде қандай сайт сенімді?', opts:['Кез келген сайт','Wikipedia және ресми сайттар','Тек соц. желілер','Жарнамалы сайттар'], correct:1, exp:'Wikipedia, ресми ғылыми сайттар және беделді жаршылар сенімді ақпарат береді.' },
+      { q:'Жақсы презентацияда слайдта не болмауы керек?', opts:['Сурет','Тым көп мәтін','Атаулар','Реттілік'], correct:1, exp:'Слайдқа тым көп мәтін сыйғызбаңыз — оқушылар оқи алмайды! Аз мәтін, көп визуал.' },
+      { q:'Ақпарат дереккөзін қайда көрсету керек?', opts:['Слайдта мүлдем керек емес','Слайдтың астыңғы жағында','Бірінші слайдта','Тек мұғалімге айту керек'], correct:1, exp:'Әдеп бойынша ақпарат алған жерді (дереккөзді) слайдтың астына жазу міндетті!' },
+      { q:'Google-да нақты нәтиже алу үшін не жазу керек?', opts:['Бір сөз','Нақты сұрақ немесе фраза','Тек эмодзи','Сан ғана'], correct:1, exp:'Нақты сұрақ немесе фраза жазсаң, Google сенің сұрауыңды дұрус түсінеді!' },
+    ],
+    match: {
+      lefts:  ['Тақырып слайды','Мазмұн слайды','Дереккөз','Макет'],
+      rights: ['Орналасу үлгісі','Ақпарат алған жері','Бірінші слайд','Мәтін+Сурет'],
+      pairs: [2, 3, 1, 0]
+    },
+    dragdrop: {
+      items: ['Тақырыпты таңда','Ақпарат жина','Макет таңда','Мазмұн жаз','Безендір'],
+      zones: ['1-қадам','2-қадам','3-қадам','4-қадам','5-қадам'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'browser-params': {
+    title: 'Браузер параметрлері',
+    icon: '🌐',
+    tag: '4-бөлім • 4.3.1.2',
+    desc: 'Бетбелгілер, журнал, іздеу параметрлері',
+    color: 'linear-gradient(135deg,#0891B2,#0EA5E9)',
+    theory: {
+      title: 'Браузер параметрлерін қолдану',
+      content: `
+        <p>Браузер — интернетті қарауға арналған бағдарлама. 
+        Chrome, Firefox, Edge — бәрі де браузер! Олардың параметрлерін 
+        дұрыс қолдансаңыз, интернетте жұмыс жасау тиімдірек болады. 🌐</p>
+        <h3>⭐ Бетбелгілер (Bookmarks)</h3>
+        <p>Бетбелгі — жиі қолданатын сайтты сақтap арналған функция. 
+        Сол беттен тез өтуге мүмкіндік береді!</p>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Бетбелгі қосу</h4><p>Chrome: Жұлдызша ⭐ батырмасын бас (мекенжай жолағының оң жағы)</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Бетбелгіні ашу</h4><p>CTRL+D немесе Bookmarks менюінен таңда</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Бетбелгі қалтасы</h4><p>Тақырып бойынша қалталарға сорттауға болады</p></div>
+          </div>
+        </div>
+        <h3>📋 Журнал (History)</h3>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">🕐</div>
+            <div class="ic-title">Журналды ашу</div>
+            <div class="ic-text">CTRL+H немесе Тарих менюі</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🔍</div>
+            <div class="ic-title">Іздеу</div>
+            <div class="ic-text">Журналда нақты сайт іздеуге болады</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🗑️</div>
+            <div class="ic-title">Журналды тазалау</div>
+            <div class="ic-text">CTRL+SHIFT+DELETE — кэш пен журнал тазалау</div>
+          </div>
+        </div>
+        <div class="theory-note">
+          <div class="theory-note-icon">💡</div>
+          <div class="theory-note-text">
+            Ыңғайлы кеңес: CTRL+D — ағымдағы беттің бетбелгісін 
+            жасаудың жылдам жолы!
+          </div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'🌐', title:'Браузер дегеніміз не?', body:'Chrome, Firefox, Edge, Safari — интернетке кіруге арналған бағдарламалар!' },
+      { emoji:'⭐', title:'Бетбелгілер (Bookmarks)', body:'Жиі қолданатын сайттарды сақтайтын функция. CTRL+D — жылдам қосу!' },
+      { emoji:'📋', title:'Журнал (History)', body:'Барған барлық беттеріңнің тізімі. CTRL+H арқылы ашылады.' },
+      { emoji:'⚙️', title:'Браузер параметрлері', body:'Тіл, іздеу жүйесі, парольдер, кэш — бәрін параметрлерден өзгертуге болады.' },
+      { emoji:'🛡️', title:'Қауіпсіздік', body:'Белгісіз сайттарға кірме! Браузер қаупті сайт туралы ескертеді — назар аудар!' },
+    ],
+    videos: [
+      { title:'Chrome-да бетбелгі жасау', desc:'4 мин • Бетбелгі, қалта, ұйымдастыру', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'Бетбелгі жасаудың жылдам пернелер тіркесімі?', opts:['CTRL+C','CTRL+D','CTRL+V','CTRL+Z'], correct:1, exp:'CTRL+D — ағымдағы беттің бетбелгісін жасаудың ең жылдам жолы!' },
+      { q:'Журналды ашудың пернелер тіркесімі?', opts:['CTRL+H','CTRL+J','CTRL+K','CTRL+L'], correct:0, exp:'CTRL+H — браузер журналын (History) ашады.' },
+      { q:'Бетбелгілер не үшін қолданылады?', opts:['Бейне жазу','Жиі кіретін сайттарды сақтау','Email жіберу','Сурет өңдеу'], correct:1, exp:'Бетбелгілер жиі қолданатын сайтқа тез өтуге мүмкіндік береді!' },
+      { q:'Кэш пен журналды тазалаудың пернесі?', opts:['CTRL+D','CTRL+H','CTRL+SHIFT+DELETE','CTRL+R'], correct:2, exp:'CTRL+SHIFT+DELETE — браузер деректерін (кэш, журнал, cookies) тазалайды.' },
+      { q:'Google Chrome-да бетбелгі мәзірі қайда?', opts:['Tools','Bookmarks','File','View'], correct:1, exp:'Chrome браузерінде Bookmarks мәзірінен барлық бетбелгілерді басқаруға болады.' },
+    ],
+    match: {
+      lefts:  ['CTRL+D','CTRL+H','CTRL+SHIFT+DELETE','Бетбелгі'],
+      rights: ['Журналды тазалау','Сайтты сақтау','Журналды ашу','Жиі қолданатын сайт'],
+      pairs: [1, 2, 0, 3]
+    },
+    dragdrop: {
+      items: ['Chrome','Бетбелгі','Журнал','CTRL+D','CTRL+H'],
+      zones: ['Браузер','Сайт сақтау','Тарих','Бетбелгі пернесі','Журнал пернесі'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'presentation-sound': {
+    title: 'Презентациядағы дыбыстар',
+    icon: '🔊',
+    tag: '4-бөлім • 4.3.2.1',
+    desc: 'Слайдқа музыка мен дыбыс эффектілерін қосу',
+    color: 'linear-gradient(135deg,#D97706,#F59E0B)',
+    theory: {
+      title: 'Презентацияға дыбыс қосу',
+      content: `
+        <p>Презентацияға дыбыс қосу — оны тірі, қызықты ететін тамаша тәсіл! 
+        Фондық музыка, дыбыс эффектілері немесе жазылған түсінік — 
+        бәрін слайдқа қосуға болады. 🔊</p>
+        <h3>🎵 Дыбыс қосу тәсілдері</h3>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">🎵</div>
+            <div class="ic-title">Фондық музыка</div>
+            <div class="ic-text">Барлық слайд бойы ойнайтын фон музыкасы</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">💥</div>
+            <div class="ic-title">Эффект дыбысы</div>
+            <div class="ic-text">Слайд ауысқанда немесе объект пайда болғанда</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🎤</div>
+            <div class="ic-title">Дауыстық жазба</div>
+            <div class="ic-text">Өзіңнің дауысыңды жазып, слайдқа қосу</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🔗</div>
+            <div class="ic-title">Сілтеме арқылы</div>
+            <div class="ic-text">YouTube немесе онлайн музыка сілтемесі</div>
+          </div>
+        </div>
+        <h3>📍 PowerPoint-та дыбыс қосу қадамдары</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Insert → Audio</h4><p>Жоғарғы мәзірден Insert (Кірістіру) → Audio (Дыбыс) тандаңыз</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Файлды таңда</h4><p>Компьютерден MP3 немесе WAV файлын таңда</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Параметрлерді орнат</h4><p>Автоматты ойнату, дыбыс деңгейі, барлық слайдта ойнату</p></div>
+          </div>
+        </div>
+        <div class="theory-note">
+          <div class="theory-note-icon">💡</div>
+          <div class="theory-note-text">Кеңес: Фондық музыканы тым қаттан қоспа — 
+          сөзді естімей қалуы мүмкін. Дыбыс деңгейін 20-30%-ға орнат!</div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'🔊', title:'Неге дыбыс қосамыз?', body:'Дыбыс презентацияны тірі, қызықты және есте қаларлық етеді!' },
+      { emoji:'🎵', title:'Дыбыс түрлері', body:'Фондық музыка, дыбыс эффектілері, дауыстық жазба — таңдауың сенде!' },
+      { emoji:'💻', title:'PowerPoint-та қосу', body:'Insert → Audio → Audio on My PC. MP3 немесе WAV форматы қабылданады.' },
+      { emoji:'⚙️', title:'Дыбыс параметрлері', body:'Автоматты ойнату, барлық слайдта ойнату, дыбыс деңгейі — реттеуге болады!' },
+      { emoji:'⚠️', title:'Авторлық құқық', body:'Тегін музыка сайттарын пайдалан: Pixabay Music, YouTube Audio Library!' },
+    ],
+    videos: [
+      { title:'PowerPoint-та музыка қосу', desc:'5 мин • Insert Audio, параметрлер', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'PowerPoint-та дыбыс қосу қай мәзірден жасалады?', opts:['Home','Insert','Design','View'], correct:1, exp:'Insert (Кірістіру) мәзірінен Audio (Дыбыс) бөлімін таңда!' },
+      { q:'Фондық музыканы дұрыс деңгейде орнату үшін?', opts:['100% дыбыс','Тым ысырып өшір','20-30% деңгейде','Дыбыс болмасын'], correct:2, exp:'Фондық музыка тым қатты болса, баяндаманы естімей қалады. 20-30% — оңтайлы деңгей!' },
+      { q:'PowerPoint-та дыбыс форматтары?', opts:['PNG, JPG','MP3, WAV','PDF, DOC','AVI, MP4'], correct:1, exp:'PowerPoint MP3 және WAV аудио форматтарын қолдайды.' },
+      { q:'«Автоматты ойнату» параметрі нені білдіреді?', opts:['Дыбыс жоқ','Слайд ашылғанда автоматты ойнайды','Тек басылғанда ойнайды','Кездейсоқ ойнайды'], correct:1, exp:'Автоматты ойнату (Auto) параметрі слайд экранға шыққанда дыбысты өзі іске қосады!' },
+      { q:'Тегін музыка қайдан табуға болады?', opts:['Google Play Music','Pixabay Music','Spotify','Apple Music'], correct:1, exp:'Pixabay Music және YouTube Audio Library — авторлық құқықсыз тегін музыка сайттары!' },
+    ],
+    match: {
+      lefts:  ['MP3','WAV','Insert','Авто ойнату'],
+      rights: ['Слайд ашылғанда ойнайды','Кірістіру мәзірі','Аудио формат','Жоғары сапалы аудио'],
+      pairs: [2, 3, 1, 0]
+    },
+    dragdrop: {
+      items: ['Insert','Audio','MP3 таңда','Параметр','Сақта'],
+      zones: ['1-қадам','2-қадам','3-қадам','4-қадам','5-қадам'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'presentation-video': {
+    title: 'Презентациядағы бейне',
+    icon: '📹',
+    tag: '4-бөлім • 4.3.2.2',
+    desc: 'Слайдқа YouTube бейне немесе жергілікті видео кірістіру',
+    color: 'linear-gradient(135deg,#DC2626,#EF4444)',
+    theory: {
+      title: 'Презентацияға бейне қосу',
+      content: `
+        <p>Слайдқа бейне қосу — мазмұнды тиімді жеткізудің жолы! 
+        Жергілікті файл немесе YouTube бейнесін тікелей слайдқа кірістіруге болады. 📹</p>
+        <h3>📹 Бейне кірістіру тәсілдері</h3>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">💾</div>
+            <div class="ic-title">Компьютерден</div>
+            <div class="ic-text">MP4, AVI файлын компьютерден кірістіру</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">▶️</div>
+            <div class="ic-title">YouTube-тан</div>
+            <div class="ic-text">YouTube бейнесінің сілтемесін кірістіру</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🔗</div>
+            <div class="ic-title">Онлайн бейне</div>
+            <div class="ic-text">Кез келген онлайн бейне сілтемесі</div>
+          </div>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Insert → Video</h4><p>Жоғарғы мәзірден Insert → Video → This Device немесе Online Video</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Бейнені таңда немесе сілтемені кірістір</h4><p>Компьютерден файл таңда немесе YouTube сілтемесін қой</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Өлшемін реттеу</h4><p>Бейненің өлшемін слайдқа сай реттеу. Бұрышынан тартып өзгерт</p></div>
+          </div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'📹', title:'Неге слайдқа бейне қосамыз?', body:'Бейне мазмұнды тиімдірек жеткізеді. «Бір бейне мың сөзге тұрады!»' },
+      { emoji:'💻', title:'PowerPoint-та бейне қосу', body:'Insert → Video → This Device (компьютерден) немесе Online Video (YouTube)' },
+      { emoji:'▶️', title:'YouTube бейнесі', body:'YouTube URL-ін Online Video диалогына қой. Интернет болса ойнайды!' },
+      { emoji:'⚙️', title:'Бейне параметрлері', body:'Автоматты ойнату, толық экран, дыбыс деңгейі — реттеуге болады.' },
+      { emoji:'💡', title:'Маңызды кеңестер', body:'Файл өлшері үлкен болады! Бейнені стандартты сапада сақта.' },
+    ],
+    videos: [
+      { title:'YouTube бейнесін PowerPoint-қа қосу', desc:'6 мин • Онлайн бейне кірістіру', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'PowerPoint-та онлайн бейне қосу үшін?', opts:['Home → Video','Insert → Video → Online Video','Design → Media','File → Video'], correct:1, exp:'Insert → Video → Online Video — YouTube немесе басқа онлайн бейне кірістіру жолы!' },
+      { q:'YouTube бейнесін кірістіру үшін не қажет?', opts:['Файл жүктеу','YouTube URL сілтемесі','Интернет жоқ болса да жаксы','Тек Premium аккаунт'], correct:1, exp:'YouTube бейнесін кірістіру үшін тек URL (сілтеме) жеткілікті. Бейне ойнату үшін интернет болуы керек!' },
+      { q:'Бейне форматтары PowerPoint-та?', opts:['PNG, JPG','MP3, WAV','MP4, AVI','PDF, DOC'], correct:2, exp:'PowerPoint MP4 және AVI сияқты бейне форматтарды қолдайды.' },
+      { q:'Бейне өлшемін өзгерту үшін?', opts:['Delete батырмасы','Бұрышынан тартып','Тышқанды шерту','Ctrl+Z'], correct:1, exp:'Бейненің бұрышындағы нүктені тартып, өлшемін пропорционалды өзгертуге болады.' },
+      { q:'«Online Video» кірістіргенде не болады?', opts:['Бейне жүктеледі','YouTube сілтемесі енгізіледі','Бейне жойылады','Бейне сурет болады'], correct:1, exp:'Online Video — сілтеме арқылы YouTube немесе басқа онлайн бейнені слайдқа кірістіреді.' },
+    ],
+    match: {
+      lefts:  ['Insert','Online Video','This Device','URL'],
+      rights: ['Компьютерден кірістіру','Веб сілтеме','Кірістіру мәзірі','YouTube бейне'],
+      pairs: [2, 3, 0, 1]
+    },
+    dragdrop: {
+      items: ['Insert','Video','Online Video','URL жаз','OK басу'],
+      zones: ['1-қадам','2-қадам','3-қадам','4-қадам','5-қадам'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'presentation-animation': {
+    title: 'Презентациядағы анимация',
+    icon: '🎞️',
+    tag: '4-бөлім • 4.3.2.3',
+    desc: 'Слайд элементтеріне анимация мен өту эффектілерін қосу',
+    color: 'linear-gradient(135deg,#7C3AED,#EC4899)',
+    theory: {
+      title: 'Презентацияға анимация қосу',
+      content: `
+        <p>Анимация — слайдтағы элементтердің қозғалысы! 
+        Мәтін, сурет, диаграмма — бәріне анимация қосуға болады. 
+        Бірақ тым көп анимация назарды шашатады — мөлшерін сақта! 🎞️</p>
+        <h3>🎭 Анимация түрлері</h3>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="ic-icon">🟢</div>
+            <div class="ic-title">Кіру (Entrance)</div>
+            <div class="ic-text">Элемент экранға қалай шығатыны: Fly In, Fade, Zoom...</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🔴</div>
+            <div class="ic-title">Шығу (Exit)</div>
+            <div class="ic-text">Элемент экраннан қалай жоғалатыны</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🟡</div>
+            <div class="ic-title">Ерекшелеу (Emphasis)</div>
+            <div class="ic-text">Элементті бөліп көрсету: Pulse, Spin, Color Change</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-icon">🔵</div>
+            <div class="ic-title">Өту (Transition)</div>
+            <div class="ic-text">Слайдтар арасындағы өту эффектісі</div>
+          </div>
+        </div>
+        <h3>⚙️ Анимация қосу қадамдары</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Элементті таңда</h4><p>Анимация қосқың келген мәтін, сурет немесе фигураны шерт</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Animations мәзіріне өт</h4><p>Жоғарғы мәзірден «Animations» (Анимациялар) секмесін таңда</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Анимация таңда</h4><p>Кіру, шығу немесе ерекшелеу анимациясын таңда</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content"><h4>Параметрлерді орнат</h4><p>Жылдамдық, іске қосу тәсілі (шертуде/автоматты) орнат</p></div>
+          </div>
+        </div>
+        <div class="theory-note">
+          <div class="theory-note-icon">⚠️</div>
+          <div class="theory-note-text">Назар аудар: Тым көп анимация — нашар презентация белгісі! 
+          Бір слайдта 1-2 анимация жеткілікті.</div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'🎞️', title:'Анимация дегеніміз не?', body:'Презентациядағы элементтердің қозғалысы — кіру, шығу, ерекшелеу!' },
+      { emoji:'🟢', title:'Кіру анимациясы (Entrance)', body:'Fade, Fly In, Zoom — элементтің экранға шығу тәсілдері.' },
+      { emoji:'🔵', title:'Өту (Transition)', body:'Слайдтар арасындағы тегіс өту: Fade, Push, Split, Wipe...' },
+      { emoji:'⚙️', title:'Animations мәзірі', body:'Элементті таңда → Animations секмесі → Эффектіні таңда → Параметр орнат!' },
+      { emoji:'💡', title:'Алтын ереже', body:'Аз анимация — жақсы! 1 слайдта максимум 2 анимация. Тым көп — назарды шашады!' },
+    ],
+    videos: [
+      { title:'PowerPoint анимациясы', desc:'7 мин • Entrance, Exit, Emphasis', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'«Entrance» анимациясы нені білдіреді?', opts:['Элемент шығу','Элемент кіру','Слайд ауысу','Түс өзгерту'], correct:1, exp:'Entrance анимациясы — элементтің слайдқа қалай «кіретінін» анықтайды: Fade, Fly In, т.б.' },
+      { q:'«Transition» (өту) не дегенді білдіреді?', opts:['Мәтін анимациясы','Слайдтар арасындағы өту эффектісі','Сурет кірістіру','Дыбыс қосу'], correct:1, exp:'Transition — бір слайдтан екіншісіне өтетін анимация эффектісі.' },
+      { q:'Анимация қай мәзірден қосылады?', opts:['Home','Insert','Animations','Review'], correct:2, exp:'«Animations» (Анимациялар) секмесі PowerPoint-тың жоғарғы мәзірінде орналасқан.' },
+      { q:'«Emphasis» анимациясы не үшін?', opts:['Элементті жасыру','Элементті ерекше бөліп көрсету','Слайдты жою','Дыбыс қосу'], correct:1, exp:'Emphasis — элементті «Pulse», «Spin», «Color Change» арқылы ерекшелеп көрсетеді.' },
+      { q:'Бір слайдта қанша анимация ұсынылады?', opts:['Мүмкіндігінше көп','5-10 анимация','1-2 анимация','Анимация болмасын'], correct:2, exp:'Бір слайдта 1-2 анимация жеткілікті. Тым көп анимация назарды шашатады!' },
+    ],
+    match: {
+      lefts:  ['Entrance','Exit','Emphasis','Transition'],
+      rights: ['Слайдтар арасы','Элемент кіру','Ерекшелеу','Элемент шығу'],
+      pairs: [1, 3, 2, 0]
+    },
+    dragdrop: {
+      items: ['Элемент таңда','Animations ашу','Эффект таңда','Параметр орнат','Тексеру'],
+      zones: ['1-қадам','2-қадам','3-қадам','4-қадам','5-қадам'],
+      answers: [0,1,2,3,4]
+    }
+  },
+  'mini-project': {
+    title: '«Табиғат қандай көркем!» жобасы',
+    icon: '🌿',
+    tag: '3-бөлім • 4.2.4.3',
+    desc: 'Шағын жоба: табиғат туралы бейне клип жаса',
+    color: 'linear-gradient(135deg,#065F46,#10B981)',
+    theory: {
+      title: '«Табиғат қандай көркем!» шағын жобасы',
+      content: `
+        <p>Бұл тақырыпта сен үйренген барлық дағдыларыңды біріктіресің! 
+        «Табиғат қандай көркем!» тақырыбына шағын бейне клип жасайсың. 🌿🎬</p>
+        <h3>🎯 Жоба мақсаты</h3>
+        <p>Табиғи құбылысты (жаңбыр, өсімдіктер, жел, аспан) бейнеге түсіріп, 
+        редактор арқылы өңдеп, 1-2 минуттық клип жасау.</p>
+        <h3>📋 Жоба кезеңдері</h3>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content"><h4>Жоспарлау</h4><p>Нені жазатыныңды шеш. Сценарий жаз.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content"><h4>Жазу</h4><p>Табиғатты бейнеге түсір — 3-5 сцена.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content"><h4>Өңдеу</h4><p>Редактор арқылы кескінде, өтулер қос, музыка кірістір.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-content"><h4>Экспорт</h4><p>MP4 форматында сақта.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div class="step-content"><h4>Ұсыну</h4><p>Сыныпта немесе мұғалімге тапсыр.</p></div>
+          </div>
+        </div>
+        <div class="theory-note">
+          <div class="theory-note-icon">🌟</div>
+          <div class="theory-note-text">Бұл — сенің шығармашылық жобаң! 
+          Қиялыңды жеткіз, табиғаттың сұлулығын бейнеге түсір!</div>
+        </div>
+      `
+    },
+    slides: [
+      { emoji:'🌿', title:'Шағын жоба туралы', body:'«Табиғат қандай көркем!» — табиғатты бейнеге түсіріп, клип жасау жобасы!' },
+      { emoji:'📋', title:'Жоба кезеңдері', body:'1. Жоспарла → 2. Жаз → 3. Өңде → 4. Сақта → 5. Ұсын' },
+      { emoji:'🎬', title:'Не жазуға болады?', body:'Жаңбыр, бұлттар, гүлдер, ағаштар, жануарлар, жел, су...' },
+      { emoji:'✂️', title:'Өңдеу кезеңі', body:'Ең жақсы сцена таңда, музыка қос, атаулар жаз, өтулер кірістір.' },
+      { emoji:'🏆', title:'Нәтиже', body:'1-2 минуттық клип. MP4 форматы. Мктепте ұсын немесе мұғалімге жібер!' },
+    ],
+    videos: [
+      { title:'Жоба мысалы: Табиғат клипі', desc:'3 мин • Жобаның толық болық мысалы', youtubeId:'dQw4w9WgXcQ' },
+    ],
+    quiz: [
+      { q:'«Табиғат қандай көркем!» жобасының мақсаты?', opts:['Сурет салу','Бейне клип жасау','Ән айту','Өлең жазу'], correct:1, exp:'Жобаның мақсаты — табиғатты бейнеге түсіріп, бейне клип жасау!' },
+      { q:'Жобаның бірінші кезеңі?', opts:['Жазу','Жоспарлау','Өңдеу','Ұсыну'], correct:1, exp:'Жобаны жоспарлаудан баста: не жазатыныңды шеш, сценарий жаз!' },
+      { q:'Клип қай форматта сақталуы тиіс?', opts:['PNG','PDF','MP4','MP3'], correct:2, exp:'Бейне клип MP4 форматында сақталуы тиіс — ең ыңғайлы бейне формат!' },
+      { q:'Клиптің ұзындығы қанша болуы ұсынылады?', opts:['10 секунд','1-2 минут','1 сағат','30 минут'], correct:1, exp:'Шағын жоба үшін 1-2 минуттық клип жеткілікті!' },
+      { q:'Жобада музыка қосқанда нені ескеру керек?', opts:['Ештеңені','Авторлық құқықты','Файл атауын','Бейне ұзындығын'], correct:1, exp:'Музыка авторлық құқықтан еркін болуы керек. Тегін музыка сайттарын пайдалан!' },
+    ],
+    match: {
+      lefts:  ['Кезең 1','Кезең 2','Кезең 3','Кезең 4'],
+      rights: ['Видео өңдеу','MP4 экспорт','Сценарий жазу','Табиғат жазу'],
+      pairs: [2, 3, 0, 1]
+    },
+    dragdrop: {
+      items: ['Жоспарла','Жаз','Өңде','Сақта','Ұсын'],
+      zones: ['1-кезең','2-кезең','3-кезең','4-кезең','5-кезең'],
+      answers: [0,1,2,3,4]
+    }
+  }
+};
+
+// =============================================
+// ГЛОБАЛ АЙНЫМАЛЫЛАР
+// =============================================
+let topicId = '';
+let topicData = null;
+let currentUser = null;
+let currentSlide = 0;
+let activeVideo = 0;
+
+// Quiz
+let quizIndex = 0, quizCorrect = 0, quizWrong = 0, quizAnswered = false;
+// Match
+let matchSelected = null, matchSide = null, matchPairs = [];
+let matchCorrect = 0, matchWrongFlash = false;
+// Drag & Drop
+let dragEl = null, ddCorrect = 0;
+
+// =============================================
+// ИНИЦИАЛИЗАЦИЯ
+// =============================================
+async function init() {
+  // URL параметрінен тақырыпты алу
+  const params = new URLSearchParams(window.location.search);
+  topicId = params.get('id') || 'video-creation';
+  topicData = TOPICS_DATA[topicId];
+
+  if (!topicData) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Пайдаланушы деректерін жүктеу
+  await loadUser();
+
+  // UI орнату
+  setupHero();
+  setupTheory();
+  setupSlides();
+  setupVideos();
+  initQuizGame();
+  initMatchGame();
+  initDragDropGame();
+
+  // Chatbot
+  await loadChatbot();
+
+  document.getElementById('loading-overlay').classList.add('hidden');
+}
+
+async function loadUser() {
+  try {
+    const { onAuthChange, getUserProfile } = await import('./firebase-config.js');
+    await new Promise(resolve => {
+      onAuthChange(async user => {
+        if (user) {
+          currentUser = user;
+          const profile = await getUserProfile(user.uid);
+          if (profile) document.getElementById('nav-coins-val').textContent = profile.totalCoins || 0;
+        }
+        resolve();
+      });
+      setTimeout(resolve, 4000);
+    });
+  } catch(e) {
+    const cached = localStorage.getItem('currentUser');
+    if (cached) {
+      currentUser = JSON.parse(cached);
+      document.getElementById('nav-coins-val').textContent = currentUser.totalCoins || 0;
+    }
+  }
+}
+
+// =============================================
+// HERO ОРНАТУ
+// =============================================
+function setupHero() {
+  document.title = `${topicData.title} | АКТ Платформасы`;
+  document.getElementById('nav-title').textContent = topicData.title;
+  document.getElementById('hero-icon').textContent = topicData.icon;
+  document.getElementById('hero-tag').textContent = topicData.tag;
+  document.getElementById('hero-title').textContent = topicData.title;
+  document.getElementById('hero-desc').textContent = topicData.desc;
+  document.getElementById('hero-deco').textContent = topicData.icon;
+  document.getElementById('topic-hero').style.background = topicData.color;
+  document.getElementById('pb-icon').textContent = topicData.icon;
+  document.getElementById('theory-main-title').textContent = topicData.theory.title;
+}
+
+// =============================================
+// БЛОК АУЫСТЫРУ
+// =============================================
+window.switchBlock = function(panel, btn) {
+  document.querySelectorAll('.block-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.block-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + panel).classList.add('active');
+  btn.classList.add('active');
+  updateProgress();
+};
+
+// =============================================
+// ТЕОРИЯ
+// =============================================
+function setupTheory() {
+  document.getElementById('theory-content').innerHTML = topicData.theory.content;
+}
+
+// =============================================
+// СЛАЙДТАР
+// =============================================
+function setupSlides() {
+  renderSlide();
+  const dots = document.getElementById('slide-dots');
+  dots.innerHTML = topicData.slides.map((_, i) =>
+    `<div class="slide-dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`
+  ).join('');
+}
+
+function renderSlide() {
+  const s = topicData.slides[currentSlide];
+  const bg = gradientForSlide(currentSlide);
+  document.getElementById('slide-content').innerHTML = `
+    <div class="slide-emoji">${s.emoji}</div>
+    <div class="slide-title">${s.title}</div>
+    <div class="slide-body">${s.body.replace(/\n/g,'<br>')}</div>
+  `;
+  document.getElementById('slide-number').textContent = `${currentSlide+1}/${topicData.slides.length}`;
+  document.querySelectorAll('.slide-dot').forEach((d,i) => d.classList.toggle('active', i===currentSlide));
+  document.querySelector('.slide-viewer').style.background = bg;
+  document.getElementById('slide-prev').disabled = currentSlide === 0;
+  document.getElementById('slide-next').disabled = currentSlide === topicData.slides.length - 1;
+}
+
+function gradientForSlide(i) {
+  const gs = [
+    'linear-gradient(135deg,#1E1B4B,#312E81)',
+    'linear-gradient(135deg,#14532D,#166534)',
+    'linear-gradient(135deg,#7C2D12,#92400E)',
+    'linear-gradient(135deg,#1E3A5F,#1D4ED8)',
+    'linear-gradient(135deg,#4C1D95,#5B21B6)',
+  ];
+  return gs[i % gs.length];
+}
+
+window.prevSlide = () => { if (currentSlide > 0) { currentSlide--; renderSlide(); } };
+window.nextSlide = () => { if (currentSlide < topicData.slides.length-1) { currentSlide++; renderSlide(); } };
+window.goSlide = (i) => { currentSlide = i; renderSlide(); };
+
+// =============================================
+// БЕЙНЕ
+// =============================================
+function setupVideos() {
+  const list = document.getElementById('video-list');
+  list.innerHTML = topicData.videos.map((v,i) => `
+    <div class="video-item ${i===0?'active':''}" onclick="selectVideo(${i})">
+      <div class="video-thumb">📹</div>
+      <div class="video-info">
+        <h4>${v.title}</h4>
+        <span>${v.desc}</span>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('vid-title').textContent = topicData.videos[0].title;
+}
+
+window.selectVideo = function(i) {
+  activeVideo = i;
+  document.querySelectorAll('.video-item').forEach((v,j) => v.classList.toggle('active', j===i));
+  document.getElementById('vid-title').textContent = topicData.videos[i].title;
+  const player = document.getElementById('video-player');
+  // iframe-ді жою — жаңа бейне жүктеу үшін
+  const existingIframe = player.querySelector('iframe');
+  if (existingIframe) existingIframe.remove();
+  document.getElementById('video-placeholder').style.display = 'flex';
+};
+
+window.playVideo = function() {
+  const v = topicData.videos[activeVideo];
+  const player = document.getElementById('video-player');
+  document.getElementById('video-placeholder').style.display = 'none';
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1`;
+  iframe.allow = 'autoplay; encrypted-media';
+  iframe.allowFullscreen = true;
+  player.appendChild(iframe);
+};
+
+// =============================================
+// QUIZ ОЙЫНЫ
+// =============================================
+window.initQuizGame = function() {
+  quizIndex = 0; quizCorrect = 0; quizWrong = 0; quizAnswered = false;
+  updateQuizScore();
+  document.getElementById('quiz-result').classList.remove('show');
+  renderQuiz();
+};
+
+function renderQuiz() {
+  if (quizIndex >= topicData.quiz.length) {
+    showQuizResult(); return;
+  }
+  const q = topicData.quiz[quizIndex];
+  const letters = ['A','B','C','D'];
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-question">
+      <div class="quiz-q-icon">🤔</div>
+      <div class="quiz-q-num">${quizIndex+1} / ${topicData.quiz.length} сұрақ</div>
+      <div class="quiz-q-text">${q.q}</div>
+    </div>
+    <div class="quiz-options">
+      ${q.opts.map((opt,i) => `
+        <button class="quiz-option" id="opt-${i}" onclick="selectAnswer(${i})">
+          <div class="opt-letter">${letters[i]}</div>
+          <span>${opt}</span>
+        </button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
+    <button class="quiz-btn quiz-btn-next" id="quiz-next" onclick="nextQuestion()" disabled>
+      ${quizIndex===topicData.quiz.length-1 ? '🏆 Аяқтау' : 'Келесі сұрақ →'}
+    </button>
+  `;
+  quizAnswered = false;
+}
+
+window.selectAnswer = function(idx) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = topicData.quiz[quizIndex];
+  const isCorrect = idx === q.correct;
+  document.querySelectorAll('.quiz-option').forEach((opt,i) => {
+    opt.classList.add('disabled');
+    if (i === q.correct) opt.classList.add('correct');
+    if (i === idx && !isCorrect) opt.classList.add('wrong');
+  });
+  const fb = document.getElementById('quiz-feedback');
+  if (isCorrect) {
+    quizCorrect++; 
+    fb.textContent = '✅ ' + q.exp;
+    fb.className = 'quiz-feedback correct show';
+    spawnCoin();
+  } else {
+    quizWrong++;
+    fb.textContent = '❌ ' + q.exp;
+    fb.className = 'quiz-feedback wrong show';
+  }
+  updateQuizScore();
+  document.getElementById('quiz-next').disabled = false;
+};
+
+window.nextQuestion = function() {
+  quizIndex++;
+  renderQuiz();
+};
+
+function updateQuizScore() {
+  document.getElementById('quiz-correct').textContent = quizCorrect;
+  document.getElementById('quiz-wrong').textContent = quizWrong;
+}
+
+function showQuizResult() {
+  const total = topicData.quiz.length;
+  const pct = Math.round((quizCorrect / total) * 100);
+  const coins = Math.round((quizCorrect / total) * 15);
+  const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '👍' : '💪';
+  const title = pct >= 80 ? 'Тамаша нәтиже!' : pct >= 60 ? 'Жақсы!' : 'Тырыс!';
+  document.getElementById('quiz-area').innerHTML = '';
+  document.getElementById('quiz-res-emoji').textContent = emoji;
+  document.getElementById('quiz-res-title').textContent = title;
+  document.getElementById('quiz-res-score').textContent = `${quizCorrect}/${total} дұрыс жауап (${pct}%)`;
+  document.getElementById('quiz-res-coins').textContent = `🪙 +${coins} монета!`;
+  document.getElementById('quiz-result').classList.add('show');
+  saveCoins(coins, 'quiz', quizCorrect * 20);
+  updateProgress(25);
+}
+
+// =============================================
+// MATCH (СӘЙКЕСТЕНДІРУ) ОЙЫНЫ
+// =============================================
+window.initMatchGame = function() {
+  matchSelected = null; matchSide = null;
+  matchPairs = Array(topicData.match.lefts.length).fill(false);
+  matchCorrect = 0;
+  document.getElementById('match-score').textContent = 0;
+  document.getElementById('match-result').classList.remove('show');
+  renderMatchGame();
+};
+
+function renderMatchGame() {
+  const { lefts, rights } = topicData.match;
+  const shuffledRights = [...rights.keys()].sort(() => Math.random() - 0.5);
+  
+  document.getElementById('match-area').innerHTML = `
+    <div class="match-game">
+      <div class="match-column">
+        <div class="match-col-title">☰ Сол жақ</div>
+        ${lefts.map((l,i) => `
+          <div class="match-item ${matchPairs[i]?'matched':''}" 
+               id="left-${i}" onclick="selectMatchItem(${i},'left')">
+            ${l}
+          </div>`).join('')}
+      </div>
+      <div class="match-column">
+        <div class="match-col-title">☰ Оң жақ</div>
+        ${shuffledRights.map(si => `
+          <div class="match-item" id="right-${si}" onclick="selectMatchItem(${si},'right')">
+            ${rights[si]}
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+  window._shuffledRights = shuffledRights;
+}
+
+window.selectMatchItem = function(idx, side) {
+  const { pairs } = topicData.match;
+  const el = document.getElementById(`${side}-${idx}`);
+  if (el.classList.contains('matched')) return;
+
+  if (!matchSelected) {
+    matchSelected = idx;
+    matchSide = side;
+    document.querySelectorAll('.match-item').forEach(m => m.classList.remove('selected'));
+    el.classList.add('selected');
+    return;
+  }
+
+  if (matchSide === side) {
+    document.querySelectorAll('.match-item').forEach(m => m.classList.remove('selected'));
+    matchSelected = idx; matchSide = side;
+    el.classList.add('selected');
+    return;
+  }
+
+  // Сәйкестікті тексеру
+  let leftIdx = matchSide === 'left' ? matchSelected : idx;
+  let rightIdx = matchSide === 'right' ? matchSelected : idx;
+  const correct = pairs[leftIdx] === rightIdx;
+
+  document.querySelectorAll('.match-item').forEach(m => m.classList.remove('selected'));
+
+  if (correct) {
+    document.getElementById(`left-${leftIdx}`).classList.add('matched');
+    document.getElementById(`right-${rightIdx}`).classList.add('matched');
+    matchPairs[leftIdx] = true;
+    matchCorrect++;
+    document.getElementById('match-score').textContent = matchCorrect;
+    spawnCoin();
+    if (matchCorrect === pairs.length) {
+      const coins = matchCorrect * 3;
+      document.getElementById('match-res-coins').textContent = `🪙 +${coins} монета!`;
+      document.getElementById('match-result').classList.add('show');
+      saveCoins(coins, 'match', matchCorrect * 25);
+      updateProgress(25);
+    }
+  } else {
+    [document.getElementById(`left-${leftIdx}`), document.getElementById(`right-${rightIdx}`)].forEach(el => {
+      if (el) { el.classList.add('wrong-flash'); setTimeout(() => el.classList.remove('wrong-flash'), 500); }
+    });
+  }
+  matchSelected = null; matchSide = null;
+};
+
+// =============================================
+// DRAG & DROP ОЙЫНЫ
+// =============================================
+window.initDragDropGame = function() {
+  ddCorrect = 0;
+  document.getElementById('dd-score').textContent = 0;
+  document.getElementById('dd-total').textContent = topicData.dragdrop.zones.length;
+  document.getElementById('dd-result').classList.remove('show');
+  renderDragDrop();
+};
+
+function renderDragDrop() {
+  const { items, zones } = topicData.dragdrop;
+  const shuffled = [...items.keys()].sort(() => Math.random() - 0.5);
+
+  document.getElementById('dd-area').innerHTML = `
+    <p style="font-size:14px;font-weight:700;color:var(--muted);margin-bottom:12px">
+      ✋ Элементті сүйреп тиісті жерге апар:
+    </p>
+    <div class="drag-items-pool" id="drag-pool">
+      ${shuffled.map(si => `
+        <div class="drag-item" draggable="true" id="drag-${si}" data-idx="${si}"
+             ondragstart="dragStart(event)" ontouchstart="touchStart(event)">
+          ${items[si]}
+        </div>`).join('')}
+    </div>
+    <div class="drop-zones">
+      ${zones.map((z,i) => `
+        <div class="drop-zone" id="zone-${i}" data-zone="${i}"
+             ondragover="dragOver(event)" ondrop="dropItem(event,${i})"
+             ondragleave="dragLeave(event)">
+          <div class="drop-zone-label">${z}</div>
+          <div class="drop-zone-slot" id="slot-${i}"></div>
+        </div>`).join('')}
+    </div>
+  `;
+}
+
+window.dragStart = (e) => {
+  dragEl = e.target.closest('.drag-item');
+  e.dataTransfer.setData('text', dragEl.dataset.idx);
+  setTimeout(() => dragEl.classList.add('dragging'), 0);
+};
+window.dragOver = (e) => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); };
+window.dragLeave = (e) => e.currentTarget.classList.remove('drag-over');
+window.dropItem = function(e, zoneIdx) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const itemIdx = parseInt(e.dataTransfer.getData('text'));
+  handleDrop(itemIdx, zoneIdx);
+};
+
+function handleDrop(itemIdx, zoneIdx) {
+  const { answers, items } = topicData.dragdrop;
+  const correct = answers[zoneIdx] === itemIdx;
+  const zone = document.getElementById(`zone-${zoneIdx}`);
+  const slot = document.getElementById(`slot-${zoneIdx}`);
+  const dragItem = document.getElementById(`drag-${itemIdx}`);
+
+  // Slot бос па?
+  if (slot.children.length > 0) {
+    // Бар элементті пулға қайтару
+    const existingIdx = parseInt(slot.querySelector('.dropped-item').dataset.idx);
+    const pool = document.getElementById('drag-pool');
+    const returnEl = document.createElement('div');
+    returnEl.className = 'drag-item';
+    returnEl.draggable = true;
+    returnEl.id = `drag-${existingIdx}`;
+    returnEl.dataset.idx = existingIdx;
+    returnEl.textContent = topicData.dragdrop.items[existingIdx];
+    returnEl.addEventListener('dragstart', dragStart);
+    pool.appendChild(returnEl);
+    slot.innerHTML = '';
+    zone.classList.remove('correct-drop','wrong-drop');
+  }
+
+  // Жаңа эелементті орналастыру
+  slot.innerHTML = `<div class="dropped-item" data-idx="${itemIdx}" onclick="returnItem(${itemIdx},${zoneIdx})">${items[itemIdx]}</div>`;
+  zone.classList.toggle('correct-drop', correct);
+  zone.classList.toggle('wrong-drop', !correct);
+
+  if (dragItem) dragItem.remove();
+
+  if (correct) {
+    ddCorrect++;
+    document.getElementById('dd-score').textContent = ddCorrect;
+    spawnCoin();
+  }
+
+  // Барлығы орналástырылды ма?
+  const total = topicData.dragdrop.zones.length;
+  const filled = document.querySelectorAll('.drop-zone-slot .dropped-item').length;
+  if (filled === total) {
+    const coins = ddCorrect * 3;
+    document.getElementById('dd-res-score').textContent = `${ddCorrect}/${total} дұрыс!`;
+    document.getElementById('dd-res-coins').textContent = `🪙 +${coins} монета!`;
+    document.getElementById('dd-result').classList.add('show');
+    saveCoins(coins, 'dragdrop', ddCorrect * 20);
+    updateProgress(25);
+  }
+}
+
+window.returnItem = function(itemIdx, zoneIdx) {
+  const slot = document.getElementById(`slot-${zoneIdx}`);
+  const zone = document.getElementById(`zone-${zoneIdx}`);
+  const pool = document.getElementById('drag-pool');
+  slot.innerHTML = '';
+  zone.classList.remove('correct-drop','wrong-drop');
+  const returnEl = document.createElement('div');
+  returnEl.className = 'drag-item';
+  returnEl.draggable = true;
+  returnEl.id = `drag-${itemIdx}`;
+  returnEl.dataset.idx = itemIdx;
+  returnEl.textContent = topicData.dragdrop.items[itemIdx];
+  returnEl.addEventListener('dragstart', dragStart);
+  pool.appendChild(returnEl);
+};
+
+// =============================================
+// ОЙЫН АУЫСТЫРУ
+// =============================================
+window.switchGame = function(game, btn) {
+  document.querySelectorAll('.game-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.game-selector-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('game-' + game).style.display = 'block';
+  btn.classList.add('active');
+};
+
+// =============================================
+// МОНЕТА — ҰШЫП ШЫҒАТЫН АНИМАЦИЯ
+// =============================================
+function spawnCoin() {
+  const coin = document.createElement('div');
+  coin.className = 'floating-coin';
+  coin.textContent = '🪙 +1';
+  const x = Math.random() * (window.innerWidth - 100) + 50;
+  coin.style.cssText = `left:${x}px;bottom:100px;`;
+  document.body.appendChild(coin);
+  setTimeout(() => coin.remove(), 1500);
+}
+
+// =============================================
+// ҰПАЙ САҚТАУ
+// =============================================
+async function saveCoins(coins, gameType, score) {
+  const navCoins = document.getElementById('nav-coins-val');
+  const current = parseInt(navCoins.textContent) || 0;
+  navCoins.textContent = current + coins;
+  document.getElementById('pb-coins').textContent = (parseInt(document.getElementById('pb-coins').textContent)||0) + coins;
+
+  if (currentUser && !currentUser.isDemoMode) {
+    try {
+      const { addCoins, markTopicCompleted } = await import('./firebase-config.js');
+      const result = await addCoins(currentUser.uid, coins, topicId, gameType, score);
+      if (result.levelUp) alert(`🎉 Деңгей арттың! Енді ${result.newLevel}-деңгей!`);
+    } catch(e) { console.warn('Firebase save error:', e); }
+  } else if (currentUser) {
+    // Demo mode — localStorage
+    currentUser.totalCoins = (currentUser.totalCoins || 0) + coins;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+}
+
+// =============================================
+// ПРОГРЕСС ЖАҢАРТУ
+// =============================================
+let totalProgress = 0;
+function updateProgress(add = 0) {
+  totalProgress = Math.min(100, totalProgress + add);
+  document.getElementById('pb-fill').style.width = totalProgress + '%';
+  if (totalProgress >= 100 && currentUser) {
+    saveTopicCompleted();
+  }
+}
+
+async function saveTopicCompleted() {
+  if (currentUser && !currentUser.isDemoMode) {
+    try {
+      const { markTopicCompleted } = await import('./firebase-config.js');
+      await markTopicCompleted(currentUser.uid, topicId);
+    } catch(e) {}
+  } else if (currentUser) {
+    const progress = JSON.parse(localStorage.getItem('demoProgress') || '{"completedTopics":[]}');
+    if (!progress.completedTopics.includes(topicId)) {
+      progress.completedTopics.push(topicId);
+      localStorage.setItem('demoProgress', JSON.stringify(progress));
+    }
+  }
+}
+
+// =============================================
+// CHATBOT
+// =============================================
+async function loadChatbot() {
+  try {
+    const { createChatbotWidget, initChatbot: startChat } = await import('./ai-helper.js');
+    const { widgetHTML, styles } = createChatbotWidget(topicData?.title || '');
+    const styleEl = document.createElement('style');
+    styleEl.textContent = styles;
+    document.head.appendChild(styleEl);
+    document.getElementById('chatbot-mount').innerHTML = widgetHTML;
+    startChat(topicData?.title || '');
+  } catch(e) { console.warn('Chatbot жүктелмеді'); }
+}
+
+// Бастау
+init();
+</script>
+</body>
+</html>

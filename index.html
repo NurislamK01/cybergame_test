@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>АКТ Оқу Платформасы | 4-сынып</title>
+  <meta name="description" content="4-сынып оқушыларына арналған АКТ интерактивті платформасы. Бейне жасау, презентация, геймификация." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #7C3AED;
+      --primary-dark: #5B21B6;
+      --primary-light: #EDE9FE;
+      --secondary: #4F46E5;
+      --accent: #F59E0B;
+      --accent-light: #FEF3C7;
+      --success: #10B981;
+      --success-light: #D1FAE5;
+      --danger: #EF4444;
+      --bg: #F5F3FF;
+      --card: #FFFFFF;
+      --text: #1F2937;
+      --muted: #6B7280;
+      --border: #E5E7EB;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ===========================
+       НАВИГАЦИЯ
+    =========================== */
+    .navbar {
+      background: white;
+      border-bottom: 2px solid var(--primary-light);
+      padding: 12px 24px;
+      display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(124,58,237,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { font-size: 32px; }
+    .nav-logo-text { font-size: 18px; font-weight: 900; color: var(--primary); line-height: 1.2; }
+    .nav-logo-sub { font-size: 11px; color: var(--muted); font-weight: 600; }
+    .nav-spacer { flex: 1; }
+
+    /* Ұпай / Монеталар */
+    .nav-coins {
+      display: flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--accent-light), #FDE68A);
+      padding: 8px 16px; border-radius: 20px;
+      border: 2px solid #FDE68A;
+    }
+    .coins-icon { font-size: 22px; animation: spin-slow 4s linear infinite; }
+    @keyframes spin-slow { 0%,100%{transform:rotate(-10deg)} 50%{transform:rotate(10deg)} }
+    .coins-count { font-size: 18px; font-weight: 900; color: #92400E; }
+    .coins-label { font-size: 12px; color: #A16207; font-weight: 700; }
+
+    /* Деңгей (Level) */
+    .nav-level {
+      display: flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--primary-light), #DDD6FE);
+      padding: 8px 16px; border-radius: 20px;
+      border: 2px solid #DDD6FE;
+    }
+    .level-badge { font-size: 22px; }
+    .level-info { line-height: 1.2; }
+    .level-num { font-size: 15px; font-weight: 900; color: var(--primary); }
+    .level-text { font-size: 11px; color: var(--muted); font-weight: 600; }
+
+    /* Прогресс жолағы */
+    .level-bar-wrap {
+      width: 80px; background: #E5E7EB; border-radius: 10px; height: 6px;
+    }
+    .level-bar {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      height: 100%; border-radius: 10px; transition: width 0.5s ease;
+    }
+
+    /* Аватар/профиль */
+    .nav-profile {
+      display: flex; align-items: center; gap: 10px;
+      background: white; padding: 6px 14px 6px 6px;
+      border-radius: 20px; border: 2px solid var(--border);
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .nav-profile:hover { border-color: var(--primary); background: var(--primary-light); }
+    .avatar-circle {
+      width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .profile-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .logout-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 16px; padding: 6px; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .logout-btn:hover { color: var(--danger); }
+
+    /* ===========================
+       HERO СЕКЦИЯ
+    =========================== */
+    .hero {
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #A855F7 100%);
+      padding: 48px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-content {
+      max-width: 900px; margin: 0 auto; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .hero-greeting {
+      font-size: 18px; font-weight: 700;
+      color: rgba(255,255,255,0.85); margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: clamp(28px,5vw,52px); font-weight: 900;
+      color: white; margin-bottom: 12px; line-height: 1.2;
+    }
+    .hero-title span {
+      background: linear-gradient(90deg, #FDE68A, #F59E0B);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: 16px; color: rgba(255,255,255,0.8);
+      max-width: 500px; margin: 0 auto 28px;
+    }
+
+    /* Жылдам статистика */
+    .hero-stats {
+      display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+      padding: 14px 24px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hero-stat-num { font-size: 24px; font-weight: 900; color: white; }
+    .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    /* Фон безендірмелері */
+    .hero-deco {
+      position: absolute; opacity: 0.15;
+      animation: float 6s ease-in-out infinite;
+    }
+    .hero-deco-1 { font-size: 80px; top: 10px; left: 60px; animation-delay: 0s; }
+    .hero-deco-2 { font-size: 60px; top: 20px; right: 80px; animation-delay: 2s; }
+    .hero-deco-3 { font-size: 50px; bottom: 20px; left: 30%; animation-delay: 1s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(8deg); }
+    }
+
+    /* ===========================
+       ТАҚЫРЫПТАР БӨЛІМІ
+    =========================== */
+    .main-content {
+      max-width: 1100px; margin: -36px auto 40px;
+      padding: 0 20px;
+    }
+
+    /* Бөлім тақырыбы */
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .section-title { font-size: 22px; font-weight: 900; color: var(--text); }
+    .section-subtitle { font-size: 14px; color: var(--muted); font-weight: 600; }
+
+    /* Тақырып карточкалары */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .topic-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+    }
+    .topic-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    }
+    .topic-card.completed { border-color: var(--success); }
+    .topic-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; border-radius: 24px 24px 0 0;
+    }
+    .topic-card[data-color="purple"]::before { background: linear-gradient(90deg,#7C3AED,#A855F7); }
+    .topic-card[data-color="blue"]::before   { background: linear-gradient(90deg,#3B82F6,#6366F1); }
+    .topic-card[data-color="green"]::before  { background: linear-gradient(90deg,#10B981,#14B8A6); }
+    .topic-card[data-color="orange"]::before { background: linear-gradient(90deg,#F59E0B,#F97316); }
+    .topic-card[data-color="pink"]::before   { background: linear-gradient(90deg,#EC4899,#A855F7); }
+
+    .topic-icon { font-size: 44px; margin-bottom: 12px; display: block; }
+    .topic-section-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+    }
+    .badge-section3 { background: #EDE9FE; color: #5B21B6; }
+    .badge-section4 { background: #DBEAFE; color: #1D4ED8; }
+    .topic-title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+    .topic-desc { font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.5; }
+
+    /* Карточканың төменгі бөлігі */
+    .topic-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);
+    }
+    .topic-reward {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 700; color: #92400E;
+    }
+    .topic-status {
+      font-size: 12px; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .status-new { background: var(--primary-light); color: var(--primary); }
+    .status-done { background: var(--success-light); color: var(--success); }
+    .status-inprogress { background: #FEF3C7; color: #92400E; }
+
+    /* Прогресс жолағы (карточкада) */
+    .progress-bar-wrap { height: 6px; background: var(--border); border-radius: 10px; margin: 10px 0; }
+    .progress-bar { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+    .pb-purple { background: linear-gradient(90deg,#7C3AED,#A855F7); }
+    .pb-blue   { background: linear-gradient(90deg,#3B82F6,#6366F1); }
+    .pb-green  { background: linear-gradient(90deg,#10B981,#14B8A6); }
+    .pb-orange { background: linear-gradient(90deg,#F59E0B,#F97316); }
+    .pb-pink   { background: linear-gradient(90deg,#EC4899,#A855F7); }
+
+    /* ===========================
+       ЖЕТІСТІКТЕР ПАНЕЛІ
+    =========================== */
+    .achievements-section {
+      background: white; border-radius: 24px; padding: 28px;
+      margin-bottom: 32px;
+    }
+    .achievements-grid {
+      display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px;
+    }
+    .badge-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 6px; padding: 16px; border-radius: 16px;
+      min-width: 100px; transition: transform 0.2s;
+    }
+    .badge-item:hover { transform: scale(1.05); }
+    .badge-item.earned { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
+    .badge-item.locked { background: #F3F4F6; filter: grayscale(1); opacity: 0.5; }
+    .badge-emoji { font-size: 36px; }
+    .badge-name { font-size: 12px; font-weight: 700; color: var(--text); text-align: center; }
+
+    /* ===========================
+       MOTIVATIONAL SIDEBAR
+    =========================== */
+    .two-col {
+      display: grid; grid-template-columns: 1fr 320px; gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+    .sidebar-card {
+      background: white; border-radius: 24px; padding: 24px; margin-bottom: 20px;
+    }
+    .sidebar-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 16px; }
+
+    /* Streak / Серия */
+    .streak-display {
+      text-align: center; padding: 24px;
+      background: linear-gradient(135deg, #FFF7ED, #FEF3C7);
+      border-radius: 16px; border: 2px solid #FDE68A;
+    }
+    .streak-fire { font-size: 48px; animation: fire 1s ease-in-out infinite alternate; }
+    @keyframes fire { from{transform:scale(1)} to{transform:scale(1.1) rotate(-5deg)} }
+    .streak-count { font-size: 36px; font-weight: 900; color: #92400E; }
+    .streak-label { font-size: 14px; color: #A16207; font-weight: 700; }
+
+    /* Кеңес карточкасы */
+    .tip-card {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px; padding: 20px; color: white; margin-bottom: 16px;
+    }
+    .tip-icon { font-size: 28px; margin-bottom: 8px; }
+    .tip-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+    .tip-text { font-size: 13px; opacity: 0.85; line-height: 1.5; }
+
+    /* ===========================
+       ЖАЛПЫ
+    =========================== */
+    .divider {
+      height: 2px; background: linear-gradient(90deg, var(--primary-light), transparent);
+      margin: 32px 0;
+    }
+
+    .loading-overlay {
+      position: fixed; inset: 0; background: rgba(245,243,255,0.9);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999; flex-direction: column; gap: 16px;
+    }
+    .loading-spinner {
+      width: 56px; height: 56px; border: 4px solid var(--primary-light);
+      border-top-color: var(--primary); border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 16px; font-weight: 700; color: var(--primary); }
+    .loading-overlay.hidden { display: none; }
+
+    footer {
+      text-align: center; padding: 24px;
+      color: var(--muted); font-size: 13px; font-weight: 600;
+    }
+
+    /* Coin earned animation */
+    .coin-popup {
+      position: fixed; top: 80px; right: 24px;
+      background: linear-gradient(135deg, #F59E0B, #D97706);
+      color: white; padding: 12px 20px; border-radius: 16px;
+      font-weight: 800; font-size: 16px;
+      box-shadow: 0 8px 24px rgba(245,158,11,0.4);
+      z-index: 9998; animation: coinPop 0.5s ease;
+      display: none;
+    }
+    @keyframes coinPop {
+      0% { transform: scale(0.5) translateY(20px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Жүктелу экраны -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <p class="loading-text">Жүктелуде... ⏳</p>
+</div>
+
+<!-- Монета попап -->
+<div class="coin-popup" id="coin-popup">🪙 +0 монета!</div>
+
+<!-- ===========================
+     НАВИГАЦИЯ
+=========================== -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">🚀</span>
+    <div>
+      <div class="nav-logo-text">АКТ Платформасы</div>
+      <div class="nav-logo-sub">4-сынып • Цифрлық сауаттылық</div>
+    </div>
+  </a>
+  <div class="nav-spacer"></div>
+
+  <!-- Монеталар -->
+  <div class="nav-coins" id="nav-coins">
+    <span class="coins-icon">🪙</span>
+    <div>
+      <div class="coins-count" id="coins-display">0</div>
+      <div class="coins-label">монета</div>
+    </div>
+  </div>
+
+  <!-- Деңгей -->
+  <div class="nav-level">
+    <span class="level-badge">⭐</span>
+    <div class="level-info">
+      <div class="level-num"><span id="level-display">1</span>-деңгей</div>
+      <div class="level-bar-wrap">
+        <div class="level-bar" id="level-bar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Профиль -->
+  <a href="profile.html" class="nav-profile" id="nav-profile">
+    <div class="avatar-circle" id="nav-avatar">🦊</div>
+    <span class="profile-name" id="nav-name">Оқушы</span>
+  </a>
+
+  <!-- Шығу батырмасы -->
+  <button class="logout-btn" onclick="handleLogout()" title="Шығу">🚪</button>
+</nav>
+
+<!-- ===========================
+     HERO
+=========================== -->
+<section class="hero">
+  <div class="hero-deco hero-deco-1">🎬</div>
+  <div class="hero-deco hero-deco-2">📊</div>
+  <div class="hero-deco hero-deco-3">⭐</div>
+
+  <div class="hero-content">
+    <p class="hero-greeting" id="hero-greeting">Сәлем, Оқушы! 👋</p>
+    <h1 class="hero-title">
+      <span>АКТ</span> пәнін<br>ойын арқылы үйрен!
+    </h1>
+    <p class="hero-subtitle">
+      Бейне жасаудан бастап презентацияға дейін — бәрін бірге үйренеміз! 🌟
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">8</div>
+        <div class="hero-stat-label">Тақырып</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat-completed">0</div>
+        <div class="hero-stat-label">Аяқталды</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat-coins">0</div>
+        <div class="hero-stat-label">🪙 Монета</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" id="stat-badges">0</div>
+        <div class="hero-stat-label">🏆 Badge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     НЕГІЗГІ КОНТЕНТ
+=========================== -->
+<main class="main-content">
+  <div class="two-col">
+    <!-- СОЛ БАҒАН: ТАҚЫРЫПТАР -->
+    <div>
+      <!-- 3-БӨЛІМ -->
+      <div class="section-header" style="margin-top:16px">
+        <div class="section-icon" style="background:linear-gradient(135deg,#EDE9FE,#DDD6FE)">🎬</div>
+        <div>
+          <div class="section-title">3-бөлім: Бейне жасау</div>
+          <div class="section-subtitle">«Табиғи құбылыстар» тақырыбы</div>
+        </div>
+      </div>
+
+      <div class="topics-grid" id="section3-grid">
+        <!-- Тақырып карточкалары JS арқылы жасалады -->
+      </div>
+
+      <!-- 4-БӨЛІМ -->
+      <div class="section-header">
+        <div class="section-icon" style="background:linear-gradient(135deg,#DBEAFE,#BFDBFE)">📊</div>
+        <div>
+          <div class="section-title">4-бөлім: Презентациялар</div>
+          <div class="section-subtitle">«Қоршаған ортаны қорғау» тақырыбы</div>
+        </div>
+      </div>
+
+      <div class="topics-grid" id="section4-grid">
+        <!-- Тақырып карточкалары JS арқылы жасалады -->
+      </div>
+
+      <!-- ЖЕТІСТІКТЕР -->
+      <div class="achievements-section">
+        <div class="section-header" style="margin-bottom:0">
+          <div class="section-icon" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">🏆</div>
+          <div>
+            <div class="section-title">Менің жетістіктерім</div>
+            <div class="section-subtitle">Тапсырмаларды орындап badge жина!</div>
+          </div>
+        </div>
+        <div class="achievements-grid" id="badges-grid">
+          <!-- JS арқылы толтырылады -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ОҢ БАҒАН: SIDEBAR -->
+    <div>
+      <!-- Streak -->
+      <div class="sidebar-card" style="margin-top:16px">
+        <div class="sidebar-title">🔥 Бүгінгі серия</div>
+        <div class="streak-display">
+          <div class="streak-fire">🔥</div>
+          <div class="streak-count" id="streak-count">1</div>
+          <div class="streak-label">күн қатарынан</div>
+        </div>
+      </div>
+
+      <!-- AI Кеңес -->
+      <div class="tip-card">
+        <div class="tip-icon">🤖</div>
+        <div class="tip-title">Зере сенімен бірге!</div>
+        <div class="tip-text">
+          Кез келген тақырып бойынша сұрағың болса, төменгі оң жақтағы 
+          <strong>🤖 батырмасын</strong> басып, Зереден сұра!
+        </div>
+      </div>
+
+      <!-- Жылдам нұсқаулық -->
+      <div class="sidebar-card">
+        <div class="sidebar-title">📌 Қалай жұмыс жасайды?</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:10px;align-items:start">
+            <div style="width:28px;height:28px;background:#EDE9FE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">1</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600">Тақырыпты тап және теорияны оқы 📖</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:start">
+            <div style="width:28px;height:28px;background:#DBEAFE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">2</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600">Презентация мен бейнені қара 🎬</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:start">
+            <div style="width:28px;height:28px;background:#D1FAE5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">3</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600">Ойындарды ойна, монета жина! 🪙</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:start">
+            <div style="width:28px;height:28px;background:#FEF3C7;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">4</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600">Badge жинап, деңгей арттыр! 🏆</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Профиль байланысы -->
+      <div class="sidebar-card" style="background:linear-gradient(135deg,#4F46E5,#7C3AED);border:none">
+        <div style="color:rgba(255,255,255,0.85);font-size:13px;font-weight:700;margin-bottom:12px">👤 Менің профилім</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="font-size:40px" id="sidebar-avatar">🦊</div>
+          <div>
+            <div style="color:white;font-weight:800;font-size:16px" id="sidebar-name">Оқушы</div>
+            <div style="color:rgba(255,255,255,0.7);font-size:12px" id="sidebar-level">1-деңгей</div>
+          </div>
+        </div>
+        <a href="profile.html" style="display:block;text-align:center;background:rgba(255,255,255,0.2);color:white;padding:10px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;transition:background 0.2s" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+          Профильді көру →
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 АКТ Оқу Платформасы · 4-сынып «Цифрлық сауаттылық» · Магистрлік диссертация жобасы
+</footer>
+
+<!-- =============================================
+     CHATBOT WIDGET
+============================================= -->
+<div id="chatbot-mount"></div>
+
+<script type="module">
+  // =============================================
+  // ТАҚЫРЫПТАР ДЕРЕКТЕРІ
+  // =============================================
+  const TOPICS = {
+    section3: [
+      {
+        id: 'video-creation',
+        icon: '🎥',
+        section: '3-бөлім',
+        color: 'purple',
+        title: 'Бейне жазба жасау',
+        standard: '4.2.4.1',
+        desc: 'Табиғи құбылыстарды бейнеге түсіруді үйрен. Камера, жарық, сапалы жазу.',
+        coins: 15,
+      },
+      {
+        id: 'video-editing',
+        icon: '✂️',
+        section: '3-бөлім',
+        color: 'purple',
+        title: 'Бейнені өңдеу',
+        standard: '4.2.4.2',
+        desc: 'Бейне редакторда кескіндеу, өтулер, музыка қосуды үйрен.',
+        coins: 20,
+      },
+      {
+        id: 'mini-project',
+        icon: '🌿',
+        section: '3-бөлім',
+        color: 'green',
+        title: '«Табиғат қандай көркем!» жобасы',
+        standard: '4.2.4.3',
+        desc: 'Шағын жоба: табиғат туралы бейне клип жаса!',
+        coins: 30,
+      },
+    ],
+    section4: [
+      {
+        id: 'slide-layout',
+        icon: '🖼️',
+        section: '4-бөлім',
+        color: 'blue',
+        title: 'Слайд макеті & Ақпарат іздеу',
+        standard: '4.3.1.1',
+        desc: 'Слайдқа макет таңдау, интернеттен ақпарат іздеу.',
+        coins: 15,
+      },
+      {
+        id: 'browser-params',
+        icon: '🌐',
+        section: '4-бөлім',
+        color: 'blue',
+        title: 'Браузер параметрлері',
+        standard: '4.3.1.2',
+        desc: 'Бетбелгілер жасау, браузер журналы, іздеу параметрлері.',
+        coins: 15,
+      },
+      {
+        id: 'presentation-sound',
+        icon: '🔊',
+        section: '4-бөлім',
+        color: 'orange',
+        title: 'Презентациядағы дыбыстар',
+        standard: '4.3.2.1',
+        desc: 'Слайдқа музыка, дыбыс эффектілерін қосуды үйрен.',
+        coins: 20,
+      },
+      {
+        id: 'presentation-video',
+        icon: '📹',
+        section: '4-бөлім',
+        color: 'orange',
+        title: 'Презентациядағы бейне',
+        standard: '4.3.2.2',
+        desc: 'Слайдқа YouTube бейне немесе жергілікті видео кірістіру.',
+        coins: 20,
+      },
+      {
+        id: 'presentation-animation',
+        icon: '🎞️',
+        section: '4-бөлім',
+        color: 'pink',
+        title: 'Презентациядағы анимация',
+        standard: '4.3.2.3',
+        desc: 'Слайд элементтеріне анимация мен өту эффектілерін қосу.',
+        coins: 25,
+      },
+    ]
+  };
+
+  const ALL_BADGES = [
+    { id: 'first_quiz', icon: '🌟', name: 'Алғашқы қадам' },
+    { id: 'video_master', icon: '🎬', name: 'Бейне шебері' },
+    { id: 'presentation_pro', icon: '📊', name: 'Презентация шебері' },
+    { id: 'coin_collector', icon: '💰', name: 'Ұпай жинаушы' },
+    { id: 'level_5', icon: '🏆', name: 'Жас маман' },
+  ];
+
+  // =============================================
+  // ПАЙДАЛАНУШЫ ДЕРЕКТЕРІН ЖҮКТЕУ
+  // =============================================
+  let currentUser = null;
+  let userProfile = null;
+  let userProgress = null;
+  let earnedBadges = [];
+
+  async function loadUserData() {
+    // 1. Firebase Auth тексеру
+    try {
+      const { onAuthChange, getUserProfile, getUserProgress, getEarnedBadges } = 
+        await import('./firebase-config.js');
+
+      return new Promise((resolve) => {
+        onAuthChange(async (user) => {
+          if (user) {
+            currentUser = user;
+            userProfile = await getUserProfile(user.uid);
+            userProgress = await getUserProgress(user.uid);
+            earnedBadges = await getEarnedBadges(user.uid);
+            resolve(true);
+          } else {
+            // Firebase жоқ — demo режим
+            resolve(false);
+          }
+        });
+        // Timeout: Firebase 5 секундтан артық жүктелсе demo-ға өту
+        setTimeout(() => resolve(false), 5000);
+      });
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function loadDemoData() {
+    const cached = localStorage.getItem('currentUser');
+    if (!cached) {
+      window.location.href = 'auth.html';
+      return;
+    }
+    userProfile = JSON.parse(cached);
+    const progressStr = localStorage.getItem('demoProgress');
+    userProgress = progressStr ? JSON.parse(progressStr) : { completedTopics: [], totalScore: 0 };
+    earnedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '[]');
+  }
+
+  // =============================================
+  // UI ЖАҢАРТУ
+  // =============================================
+  function updateUI() {
+    if (!userProfile) return;
+
+    const name = userProfile.displayName || 'Оқушы';
+    const coins = userProfile.totalCoins || 0;
+    const level = userProfile.level || 1;
+    const avatar = userProfile.avatar || '🦊';
+    const xp = userProfile.xp || 0;
+
+    // Navbar
+    document.getElementById('coins-display').textContent = coins;
+    document.getElementById('level-display').textContent = level;
+    document.getElementById('nav-name').textContent = name;
+    document.getElementById('nav-avatar').textContent = avatar;
+
+    // XP прогресс
+    const { getLevelProgress } = window.gamification || {};
+    if (getLevelProgress) {
+      document.getElementById('level-bar').style.width = getLevelProgress(xp) + '%';
+    } else {
+      document.getElementById('level-bar').style.width = ((xp % 100)) + '%';
+    }
+
+    // Hero
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Қайырлы таң' : hour < 18 ? 'Қайырлы күн' : 'Қайырлы кеш';
+    document.getElementById('hero-greeting').textContent = `${greeting}, ${name}! 👋`;
+
+    // Hero статистика
+    const completed = (userProgress?.completedTopics || []).length;
+    document.getElementById('stat-completed').textContent = completed;
+    document.getElementById('stat-coins').textContent = coins;
+    document.getElementById('stat-badges').textContent = earnedBadges.length;
+
+    // Sidebar
+    document.getElementById('sidebar-avatar').textContent = avatar;
+    document.getElementById('sidebar-name').textContent = name;
+    document.getElementById('sidebar-level').textContent = `${level}-деңгей`;
+    document.getElementById('streak-count').textContent = userProfile.streakDays || 1;
+  }
+
+  // =============================================
+  // ТАҚЫРЫП КАРТОЧКАЛАРЫН ЖАСАУ
+  // =============================================
+  function renderTopics(section, containerId) {
+    const container = document.getElementById(containerId);
+    const completedTopics = userProgress?.completedTopics || [];
+
+    container.innerHTML = TOPICS[section].map(topic => {
+      const isCompleted = completedTopics.includes(topic.id);
+      const progress = isCompleted ? 100 : (localStorage.getItem(`progress_${topic.id}`) || 0);
+      const statusClass = isCompleted ? 'status-done' : (progress > 0 ? 'status-inprogress' : 'status-new');
+      const statusLabel = isCompleted ? '✅ Аяқталды' : (progress > 0 ? '▶ Жалғастыру' : '🆕 Жаңа');
+      const sectionBadgeClass = section === 'section3' ? 'badge-section3' : 'badge-section4';
+
+      return `
+        <a href="topic.html?id=${topic.id}" class="topic-card ${isCompleted ? 'completed' : ''}" 
+           data-color="${topic.color}" id="card-${topic.id}">
+          <span class="topic-icon">${topic.icon}</span>
+          <span class="topic-section-badge ${sectionBadgeClass}">${topic.section} • ${topic.standard || ''}</span>
+          <h3 class="topic-title">${topic.title}</h3>
+          <p class="topic-desc">${topic.desc}</p>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar pb-${topic.color}" style="width:${progress}%"></div>
+          </div>
+          <div class="topic-card-footer">
+            <div class="topic-reward">🪙 +${topic.coins} монета</div>
+            <span class="topic-status ${statusClass}">${statusLabel}</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  // =============================================
+  // BADGE ЖАСАУ
+  // =============================================
+  function renderBadges() {
+    const grid = document.getElementById('badges-grid');
+    const earnedIds = earnedBadges.map(b => b.badgeId || b.id);
+
+    grid.innerHTML = ALL_BADGES.map(badge => {
+      const isEarned = earnedIds.includes(badge.id);
+      return `
+        <div class="badge-item ${isEarned ? 'earned' : 'locked'}" title="${badge.name}">
+          <div class="badge-emoji">${badge.icon}</div>
+          <div class="badge-name">${badge.name}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // =============================================
+  // ШЫҒУ (Logout)
+  // =============================================
+  window.handleLogout = async function() {
+    try {
+      const { logoutStudent } = await import('./firebase-config.js');
+      await logoutStudent();
+    } catch(e) {}
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('demoProgress');
+    window.location.href = 'auth.html';
+  };
+
+  // =============================================
+  // CHATBOT WIDGET ЕНГІЗУ
+  // =============================================
+  async function initChatbot() {
+    try {
+      const { createChatbotWidget, initChatbot: startChat } = await import('./ai-helper.js');
+      const { widgetHTML, styles } = createChatbotWidget('АКТ пәні жалпы');
+      
+      const styleEl = document.createElement('style');
+      styleEl.textContent = styles;
+      document.head.appendChild(styleEl);
+      
+      document.getElementById('chatbot-mount').innerHTML = widgetHTML;
+      startChat('АКТ пәні жалпы');
+    } catch(e) {
+      console.warn('AI chatbot жүктелмеді:', e);
+    }
+  }
+
+  // =============================================
+  // ИНИЦИАЛИЗАЦИЯ
+  // =============================================
+  async function init() {
+    const overlay = document.getElementById('loading-overlay');
+
+    // Firebase арқылы немесе demo-мен деректерді жүктеу
+    const firebaseLoaded = await loadUserData();
+    if (!firebaseLoaded) {
+      loadDemoData();
+    }
+
+    // UI жаңарту
+    updateUI();
+    renderTopics('section3', 'section3-grid');
+    renderTopics('section4', 'section4-grid');
+    renderBadges();
+
+    // Chatbot
+    await initChatbot();
+
+    // Жүктелу экранын жасыру
+    overlay.classList.add('hidden');
+  }
+
+  init();
+</script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Кіру | АКТ Оқу Платформасы 4-сынып</title>
+  <meta name="description" content="4-сынып АКТ пәніне арналған интерактивті оқыту платформасы. Тіркеліп, оқуды бастаңыз!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #7C3AED;
+      --primary-light: #A78BFA;
+      --secondary: #4F46E5;
+      --accent: #F59E0B;
+      --success: #10B981;
+      --danger: #EF4444;
+      --bg: #F5F3FF;
+      --card: #FFFFFF;
+      --text: #1F2937;
+      --muted: #6B7280;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 40px 0;
+      position: relative;
+    }
+
+    /* Анимацияланған фон */
+    .bg-shapes {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    }
+    .shape {
+      position: absolute; border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    .shape-1 { width: 300px; height: 300px; background: rgba(124,58,237,0.12); top: -80px; left: -80px; animation-delay: 0s; }
+    .shape-2 { width: 200px; height: 200px; background: rgba(245,158,11,0.15); bottom: -60px; right: -60px; animation-delay: 2s; }
+    .shape-3 { width: 150px; height: 150px; background: rgba(16,185,129,0.12); top: 60%; left: 10%; animation-delay: 4s; }
+    .shape-4 { width: 100px; height: 100px; background: rgba(79,70,229,0.15); top: 20%; right: 15%; animation-delay: 1s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    /* Ортадағы карточка */
+    .auth-wrapper {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 480px; padding: 20px;
+    }
+
+    /* Логотип/Бренд */
+    .brand {
+      text-align: center; margin-bottom: 32px;
+    }
+    .brand-logo {
+      font-size: 56px; display: block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .brand h1 {
+      font-size: 26px; font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-top: 8px;
+    }
+    .brand p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+    /* Карточка */
+    .auth-card {
+      background: white;
+      border-radius: 28px;
+      padding: 36px;
+      box-shadow: 0 20px 60px rgba(124,58,237,0.15);
+    }
+
+    /* Жексер тандаушы (Login/Register) */
+    .tab-switcher {
+      display: flex; background: var(--bg); border-radius: 16px;
+      padding: 4px; margin-bottom: 28px;
+    }
+    .tab-btn {
+      flex: 1; padding: 10px; border: none; background: transparent;
+      border-radius: 12px; font-family: 'Nunito', sans-serif;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: all 0.3s ease; color: var(--muted);
+    }
+    .tab-btn.active {
+      background: white; color: var(--primary);
+      box-shadow: 0 4px 12px rgba(124,58,237,0.15);
+    }
+
+    /* Форма */
+    .form-section { display: none; }
+    .form-section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+    .form-title {
+      font-size: 22px; font-weight: 800; color: var(--text);
+      margin-bottom: 4px;
+    }
+    .form-subtitle { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 14px; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .input-wrapper { position: relative; }
+    .input-icon {
+      position: absolute; left: 14px; top: 50%;
+      transform: translateY(-50%); font-size: 18px;
+    }
+    .form-group input {
+      width: 100%; padding: 12px 14px 12px 44px;
+      border: 2px solid #E5E7EB; border-radius: 14px;
+      font-family: 'Nunito', sans-serif; font-size: 15px;
+      transition: border 0.2s, box-shadow 0.2s;
+      outline: none; color: var(--text);
+    }
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
+    }
+
+    /* Avatar таңдаушы */
+    .avatar-picker { margin-bottom: 20px; }
+    .avatar-picker label {
+      font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 10px; display: block;
+    }
+    .avatar-options {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .avatar-option {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--bg); border: 2px solid transparent;
+      font-size: 26px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .avatar-option:hover { transform: scale(1.1); }
+    .avatar-option.selected {
+      border-color: var(--primary);
+      background: rgba(124,58,237,0.1);
+      transform: scale(1.15);
+    }
+
+    /* Батырма */
+    .btn-primary {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none; border-radius: 16px; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+      color: white; transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(124,58,237,0.35);
+      margin-top: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(124,58,237,0.45);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary.loading { opacity: 0.7; pointer-events: none; }
+
+    /* Хабарлама */
+    .alert {
+      padding: 12px 16px; border-radius: 12px; font-size: 14px;
+      margin-bottom: 16px; font-weight: 600; display: none;
+    }
+    .alert.error { background: #FEF2F2; color: var(--danger); border: 1px solid #FECACA; }
+    .alert.success { background: #ECFDF5; color: var(--success); border: 1px solid #A7F3D0; }
+    .alert.show { display: block; animation: slideDown 0.3s ease; }
+    @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Demo есептік жазба */
+    .demo-hint {
+      margin-top: 20px; text-align: center;
+      padding: 14px; background: linear-gradient(135deg, #FFF7ED, #FEF3C7);
+      border-radius: 14px; border: 1px solid #FDE68A;
+    }
+    .demo-hint p { font-size: 13px; color: #92400E; }
+    .demo-hint strong { color: #78350F; }
+    .demo-btn {
+      margin-top: 8px; background: var(--accent); color: white;
+      border: none; border-radius: 10px; padding: 6px 16px;
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13px;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .demo-btn:hover { background: #D97706; }
+
+    /* Stars decoration */
+    .stars {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .star {
+      position: absolute; font-size: 20px;
+      animation: twinkle 3s ease-in-out infinite;
+      opacity: 0.4;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Фон безендірмелері -->
+<div class="bg-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  <div class="shape shape-4"></div>
+</div>
+<div class="stars">
+  <span class="star" style="top:10%;left:5%;animation-delay:0s">⭐</span>
+  <span class="star" style="top:20%;left:85%;animation-delay:1s">🌟</span>
+  <span class="star" style="top:70%;left:3%;animation-delay:2s">✨</span>
+  <span class="star" style="top:80%;left:90%;animation-delay:0.5s">⭐</span>
+  <span class="star" style="top:45%;left:95%;animation-delay:1.5s">🌟</span>
+</div>
+
+<!-- Негізгі контент -->
+<div class="auth-wrapper">
+  <!-- Логотип -->
+  <div class="brand">
+    <span class="brand-logo">🚀</span>
+    <h1>АКТ Оқу Платформасы</h1>
+    <p>4-сынып • Цифрлық сауаттылық</p>
+  </div>
+
+  <!-- Форма карточкасы -->
+  <div class="auth-card">
+    <!-- Сілтеме ауыстырғыш -->
+    <div class="tab-switcher">
+      <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">🔑 Кіру</button>
+      <button class="tab-btn" id="tab-register" onclick="switchTab('register')">✨ Тіркелу</button>
+    </div>
+
+    <!-- Хабарлама -->
+    <div class="alert error" id="alert-error"></div>
+    <div class="alert success" id="alert-success"></div>
+
+    <!-- КІРУ ФОРМАСЫ -->
+    <div class="form-section active" id="section-login">
+      <h2 class="form-title">👋 Қайта оралдың!</h2>
+      <p class="form-subtitle">Оқуды жалғастыру үшін кір</p>
+
+      <div class="form-group">
+        <label for="login-email">📧 Email мекенжайы</label>
+        <div class="input-wrapper">
+          <span class="input-icon">✉️</span>
+          <input type="email" id="login-email" placeholder="okushy@school.kz" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">🔒 Құпия сөз</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔐</span>
+          <input type="password" id="login-password" placeholder="••••••••" required />
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-login" onclick="handleLogin()">
+        🚀 Кіру
+      </button>
+
+      <!-- Demo режимі -->
+      <div class="demo-hint">
+        <p>📌 Firebase орнатылмаған ба? Demo режимді қолданыңыз</p>
+        <button class="demo-btn" onclick="demoLogin()">🎮 Demo ретінде кіру</button>
+      </div>
+    </div>
+
+    <!-- ТІРКЕЛУ ФОРМАСЫ -->
+    <div class="form-section" id="section-register">
+      <h2 class="form-title">🌟 Тіркелеміз!</h2>
+      <p class="form-subtitle">Жаңа есептік жазба жасаңыз</p>
+
+      <div class="form-group">
+        <label for="reg-name">👤 Атыңыз</label>
+        <div class="input-wrapper">
+          <span class="input-icon">😊</span>
+          <input type="text" id="reg-name" placeholder="Айдана" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-email">📧 Email мекенжайы</label>
+        <div class="input-wrapper">
+          <span class="input-icon">✉️</span>
+          <input type="email" id="reg-email" placeholder="okushy@school.kz" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-password">🔒 Құпия сөз</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔐</span>
+          <input type="password" id="reg-password" placeholder="Кемінде 6 таңба" required />
+        </div>
+      </div>
+
+      <!-- Аватар таңдаушы -->
+      <div class="avatar-picker">
+        <label>🎭 Аватарыңды таңда</label>
+        <div class="avatar-options">
+          <div class="avatar-option selected" data-avatar="🦊" onclick="selectAvatar(this)">🦊</div>
+          <div class="avatar-option" data-avatar="🐼" onclick="selectAvatar(this)">🐼</div>
+          <div class="avatar-option" data-avatar="🦄" onclick="selectAvatar(this)">🦄</div>
+          <div class="avatar-option" data-avatar="🐯" onclick="selectAvatar(this)">🐯</div>
+          <div class="avatar-option" data-avatar="🦋" onclick="selectAvatar(this)">🦋</div>
+          <div class="avatar-option" data-avatar="🐸" onclick="selectAvatar(this)">🐸</div>
+          <div class="avatar-option" data-avatar="🦁" onclick="selectAvatar(this)">🦁</div>
+          <div class="avatar-option" data-avatar="🐧" onclick="selectAvatar(this)">🐧</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-register" onclick="handleRegister()">
+        ✨ Тіркелу
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  // =============================================
+  // Firebase импорттары
+  // =============================================
+  import {
+    registerStudent,
+    loginStudent,
+    onAuthChange,
+  } from './firebase-config.js';
+
+  // Таңдалған аватар
+  window.selectedAvatar = '🦊';
+
+  // Tab ауыстыру
+  window.switchTab = function(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('section-' + tab).classList.add('active');
+    clearAlerts();
+  };
+
+  // Аватар таңдау
+  window.selectAvatar = function(el) {
+    document.querySelectorAll('.avatar-option').forEach(a => a.classList.remove('selected'));
+    el.classList.add('selected');
+    window.selectedAvatar = el.dataset.avatar;
+  };
+
+  // Хабарламаларды тазалау
+  function clearAlerts() {
+    ['alert-error','alert-success'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('show'); el.textContent = '';
+    });
+  }
+  function showAlert(type, msg) {
+    clearAlerts();
+    const el = document.getElementById(`alert-${type}`);
+    el.textContent = msg; el.classList.add('show');
+  }
+
+  // =============================================
+  // КІРУ
+  // =============================================
+  window.handleLogin = async function() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const btn = document.getElementById('btn-login');
+
+    if (!email || !password) { showAlert('error', '⚠️ Барлық өрісті толтырыңыз!'); return; }
+
+    btn.classList.add('loading'); btn.textContent = '⏳ Жүктелуде...';
+    try {
+      await loginStudent(email, password);
+      showAlert('success', '✅ Сәтті кірдіңіз! Бет жүктелуде...');
+      setTimeout(() => window.location.href = 'index.html', 1200);
+    } catch (err) {
+      let msg = '❌ Кіру қатесі. Email немесе пароль дұрыс емес.';
+      if (err.code === 'auth/user-not-found') msg = '❌ Бұл email тіркелмеген.';
+      if (err.code === 'auth/wrong-password') msg = '❌ Пароль дұрыс емес.';
+      if (err.code === 'auth/invalid-api-key') msg = '⚠️ Firebase конфигурациясы орнатылмаған. Demo режимін қолданыңыз!';
+      showAlert('error', msg);
+    } finally {
+      btn.classList.remove('loading'); btn.textContent = '🚀 Кіру';
+    }
+  };
+
+  // =============================================
+  // ТІРКЕЛУ
+  // =============================================
+  window.handleRegister = async function() {
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const btn = document.getElementById('btn-register');
+
+    if (!name || !email || !password) { showAlert('error', '⚠️ Барлық өрісті толтырыңыз!'); return; }
+    if (password.length < 6) { showAlert('error', '⚠️ Пароль кемінде 6 таңбадан тұруы керек!'); return; }
+
+    btn.classList.add('loading'); btn.textContent = '⏳ Тіркелуде...';
+    try {
+      await registerStudent(email, password, name);
+      // Avatar-ды localStorage-ға сақтау
+      localStorage.setItem('avatar', window.selectedAvatar);
+      showAlert('success', '🎉 Тіркелдіңіз! Бет жүктелуде...');
+      setTimeout(() => window.location.href = 'index.html', 1200);
+    } catch (err) {
+      let msg = '❌ Тіркелу қатесі.';
+      if (err.code === 'auth/email-already-in-use') msg = '❌ Бұл email бұрын тіркелген.';
+      if (err.code === 'auth/invalid-api-key') msg = '⚠️ Firebase орнатылмаған. Demo режимін қолданыңыз!';
+      showAlert('error', msg);
+    } finally {
+      btn.classList.remove('loading'); btn.textContent = '✨ Тіркелу';
+    }
+  };
+
+  // =============================================
+  // DEMO РЕЖИМ (Firebase жоқ болса)
+  // =============================================
+  window.demoLogin = function() {
+    // localStorage-ға demo профиль сақтау
+    const demoUser = {
+      uid: 'demo-user-001',
+      displayName: 'Demo Оқушы',
+      email: 'demo@school.kz',
+      avatar: '🦊',
+      totalCoins: 45,
+      level: 2,
+      xp: 350,
+      isDemoMode: true,
+    };
+    localStorage.setItem('currentUser', JSON.stringify(demoUser));
+    localStorage.setItem('demoProgress', JSON.stringify({
+      completedTopics: ['video-creation'],
+      totalScore: 120,
+    }));
+    showAlert('success', '🎮 Demo режим іске қосылды! Жүктелуде...');
+    setTimeout(() => window.location.href = 'index.html', 1000);
+  };
+
+  // Авторизацияланған пайдаланушыны анықтау
+  try {
+    import('./firebase-config.js').then(({ onAuthChange }) => {
+      onAuthChange((user) => {
+        if (user) window.location.href = 'index.html';
+      });
+    });
+  } catch(e) {
+    // Firebase орнатылмаған жағдайда localStorage тексеру
+    const cached = localStorage.getItem('currentUser');
+    if (cached) window.location.href = 'index.html';
+  }
+
+  // Enter пернесімен форма жіберу
+  document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      const activeSection = document.querySelector('.form-section.active');
+      if (activeSection.id === 'section-login') handleLogin();
+      else handleRegister();
+    }
+  });
+</script>
+</body>
+</html>
